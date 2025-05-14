@@ -9,6 +9,10 @@ $dbname = "ecomm";
 $username = "root";
 $password = "";
 
+// MySQL database name u605048123_ecomm
+// MySQL username      u605048123_ecomm25
+// Password        h|g2s]Pc0]
+
 try {
     $pdo = new PDO("mysql:dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

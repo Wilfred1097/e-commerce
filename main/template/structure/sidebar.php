@@ -53,13 +53,13 @@ $userRole = $_SESSION['role'] ?? 'User'; // Default to 'User' if role is not set
           </a>
       </li>
 
-       <li class="sidebar-list">
-          <i class="fa-solid fa-thumbtack"></i>
-          <a class="sidebar-link" href="setting-configuration.php">
-              <i class="fa-solid fa-gear"></i> <!-- Settings Icon -->
-              <h6 class="f-w-600">Settings</h6>
-          </a>
-      </li>
+        <!--  <li class="sidebar-list">
+            <i class="fa-solid fa-thumbtack"></i>
+            <a class="sidebar-link" href="setting-configuration.php">
+                <i class="fa-solid fa-gear"></i>
+                <h6 class="f-w-600">Settings</h6>
+            </a>
+        </li> -->
 
       <!-- Show User Management only if the role is Treasurer -->
       <?php endif; ?>

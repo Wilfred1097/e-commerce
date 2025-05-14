@@ -7,7 +7,7 @@
     <meta name="description" content="Admiro admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Admiro admin template, best javascript admin, dashboard template, bootstrap admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <title>Bulatok - Login</title>
+    <title>DWHMA Online Store - Login</title>
     <!-- Favicons -->
     <link href="assets/img/brgylogo.png" rel="icon">
     <link href="assets/img/brgylogo.png" rel="apple-touch-icon">
@@ -32,7 +32,7 @@
   </head>
   <style>
     .login-dark {
-        background: url('assets/img/officialshmpg.png') no-repeat center center;
+        background: url('assets/img/baskets.png') no-repeat center center;
         background-size: cover;
         height: 100vh;
         display: flex;
@@ -75,7 +75,7 @@
                     </div>
                   </div>
                   <div class="login-social-title">
-                    <h6><a href="index.php">Go back to Home Page</a></h6>
+                    <h6><a href="pages-register.php">Register</a></h6>
                   </div>
                 </form>
               </div>
