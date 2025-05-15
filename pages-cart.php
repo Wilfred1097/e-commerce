@@ -7,10 +7,11 @@
   <title>DWHMA Online Store - Cart</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
+  <meta name="theme-color" content="#4CAF50" />
 
   <!-- Favicons -->
-  <link href="homepage/assets/img/favicon.png" rel="icon">
-  <link href="homepage/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<!--   <link href="homepage/assets/img/favicon.png" rel="icon">
+  <link href="homepage/assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -62,7 +63,7 @@
         <li class="ms-3 position-relative">
           <a href="pages-cart.php" class="d-flex align-items-center" title="Cart">
             <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" style="display: none;">
               0
             </span>
           </a>
@@ -195,7 +196,7 @@
             emptyCart.innerHTML = `
                 <h4>Your cart is empty</h4>
                 <p>Browse our products and add something you like!</p>
-                <a href="index.php" class="btn btn-primary mt-3">Continue Shopping</a>
+                <a href="index.php" class="btn btn-success mt-3">Continue Shopping</a>
             `;
             cartContainer.appendChild(emptyCart);
             return;
@@ -255,7 +256,7 @@
             // Add available quantity info
             const stockInfo = document.createElement('p');
             stockInfo.className = 'small';
-            stockInfo.innerHTML = `Available: <span class="badge bg-${availableQty > 10 ? 'success' : availableQty > 5 ? 'warning' : 'danger'}">${availableQty}</span>`;
+            stockInfo.innerHTML = `Available: <span class="badge bg-${availableQty > 10 ? 'success' : availableQty > 5 ? 'warning' : 'success'}">${availableQty}</span>`;
 
             infoCol.appendChild(name);
             infoCol.appendChild(owner);
@@ -351,7 +352,7 @@
             subtotal.textContent = `Subtotal: ₱${isNaN(productTotal) ? '0.00' : productTotal.toFixed(2)}`;
 
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm';
+            deleteBtn.className = 'btn btn-success btn-sm';
             deleteBtn.innerHTML = '<i class="bi bi-trash"></i> Remove';
             deleteBtn.onclick = () => {
                 removeCartItem(product.id);
@@ -377,7 +378,7 @@
         summaryRow.className = 'row mt-4';
         summaryRow.innerHTML = `
             <div class="col-md-8">
-                <a href="index.php" class="btn btn-outline-danger">
+                <a href="index.php" class="btn btn-outline-success mb-3">
                     <i class="bi bi-arrow-left"></i> Continue Shopping
                 </a>
             </div>
@@ -398,7 +399,7 @@
                             <span>Total:</span>
                             <span>₱${totalPrice.toFixed(2)}</span>
                         </div>
-                        <button id="checkout-btn" class="btn btn-danger w-100">
+                        <button id="checkout-btn" class="btn btn-success w-100">
                             Proceed to Checkout
                         </button>
                     </div>

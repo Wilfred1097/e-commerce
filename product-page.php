@@ -40,8 +40,7 @@ if (isset($_GET['id'])) {
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="homepage/assets/img/favicon.png" rel="icon">
-  <link href="homepage/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <meta name="theme-color" content="#4CAF50" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -93,7 +92,7 @@ if (isset($_GET['id'])) {
         <li class="ms-3 position-relative">
           <a href="pages-cart.php" class="d-flex align-items-center" title="Cart">
             <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" style="display: none;">
               0
             </span>
           </a>

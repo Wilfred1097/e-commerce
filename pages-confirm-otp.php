@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate OTP input
     if (empty($enteredOtp)) {
-        echo '<p class="text-danger">Please enter the OTP.</p>';
+        echo '<p class="text-sucess">Please enter the OTP.</p>';
     } else {
         // Prepare the SQL query to check the OTP
         $sql = "SELECT gmail, role FROM users WHERE gmail = :gmail AND activate_code = :activate_code";
@@ -76,8 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <meta name="theme-color" content="#4CAF50" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -124,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="invalid-feedback">Please enter your OTP.</div>
                       </div>
                       <?php if ($errorMessage): ?>
-                          <p class="text-danger text-center mt-3 mb-1"><?php echo $errorMessage; ?></p>
+                          <p class="text-sucess text-center mt-3 mb-1"><?php echo $errorMessage; ?></p>
                       <?php endif; ?>
                     </div>
 

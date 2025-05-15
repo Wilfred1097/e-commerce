@@ -8,9 +8,11 @@
     <meta name="keywords" content="admin template, Admiro admin template, best javascript admin, dashboard template, bootstrap admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
     <title>DWHMA Online Store - Login</title>
+    <meta name="theme-color" content="#4CAF50" />
+
     <!-- Favicons -->
-    <link href="assets/img/brgylogo.png" rel="icon">
-    <link href="assets/img/brgylogo.png" rel="apple-touch-icon">
+<!--     <link href="assets/img/brgylogo.png" rel="icon">
+    <link href="assets/img/brgylogo.png" rel="apple-touch-icon"> -->
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
