@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>DWHMA Online Store</title>
+  <title>DWHMA Online Store- Homepage</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -649,7 +649,7 @@
 
         <div class="mb-5">
 
-          <iframe style="width: 100%; height: 400px;"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.47006561567!2d123.3330560118608!3d8.155303391841326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3254652f084dce41%3A0x1051d0b61f630f54!2sDumingag%20Women%20Handicraft%20Makers%20Association!5e0!3m2!1sen!2sph!4v1747237143093!5m2!1sen!2sph" allowfullscreen="" loading="lazy" ></iframe>
+          <iframe style="width: 100%; height: 400px;"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.47006561567!2d123.3330560118608!3d8.155303391841326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3254652f084dce41%3A0x1051d0b61f630f54!2sDumingag%20Women%20Handicraft%20Makers%20Association!5e0!3m2!1sen!2sph!4v1747237143093!5m2!1sen!2sph" allowfullscreen="" ></iframe>
         </div><!-- End Google Maps -->
 
         <div class="row gy-4">
@@ -732,7 +732,7 @@
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
+  <footer id="footer" class="footer white-background">
 
     <div class="container">
       <div class="row gy-3">
@@ -852,7 +852,7 @@
                         response.data.forEach(function(product) {
                             const productHtml = `
                                 <div class="col-lg-4 menu-item justify-content-center p-4">
-                                    <a href="main/template/mysql/${product.image}" target="_blank" class="glightbox">
+                                    <a href="product-page.php?id=${product.id}" class="glightbox">
                                         <img src="main/template/mysql/${product.image}" class="menu-img img-fluid" alt="${product.description}">
                                     </a>
                                     <p style="font-size: 13px;">${product.description}</p>
@@ -921,7 +921,7 @@
                                     response.data.forEach(function(product) {
                                         const productHtml = `
                                             <div class="col-lg-4 menu-item">
-                                                <a href="main/template/mysql/${product.image}" target="_blank" class="glightbox">
+                                                <a href="product-page.php?id=${product.id}" class="glightbox">
                                                     <img src="main/template/mysql/${product.image}" class="menu-img img-fluid" alt="${product.description}">
                                                 </a>
                                                 <p style="font-size: 13px; padding: 0px, 5px, 0px, 5px;">${product.description}</p>
@@ -941,6 +941,23 @@
             }
         });
     });
+  </script>
+  <script type="text/javascript">
+    function updateCartBadge() {
+        // Retrieve cart array from local storage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const badge = document.getElementById('cart-badge');
+
+        if (cart.length > 0) {
+          badge.textContent = cart.length;
+          badge.style.display = 'inline-block';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+
+      // Call this function when the page loads
+      window.addEventListener('DOMContentLoaded', updateCartBadge);
   </script>
 </body>
 

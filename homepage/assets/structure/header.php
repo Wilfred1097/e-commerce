@@ -1,5 +1,5 @@
 <div class="container position-relative d-flex align-items-center justify-content-between">
-  <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+  <a href="index.php" class="logo d-flex align-items-center me-auto me-xl-0">
     <!-- Uncomment the line below if you also wish to use an image logo -->
     <!-- <img src="assets/img/logo.png" alt=""> -->
     <h3 class="sitename">Dumingag Women Handicrafts Makers Association</h3>
@@ -30,7 +30,21 @@
     </ul> -->
   </li>
   <li><a href="#contact">Contact</a></li>
-  <li><a href="login-page.php">Login</a></li>
+  <!-- <li><a href="login-page.php">Login</a></li> -->
+  <!-- Add cart and user icons here -->
+  <li class="ms-3 position-relative">
+    <a href="pages-cart.php" class="d-flex align-items-center" title="Cart">
+      <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+      <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+        0
+      </span>
+    </a>
+  </li>
+  <li class="ms-3">
+    <a href="login-page.php" class="d-flex align-items-center" title="User Profile">
+      <i class="bi bi-person" style="font-size: 1.5rem;"></i>
+    </a>
+  </li>
 </ul>
 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 </nav>

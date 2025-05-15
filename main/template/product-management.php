@@ -119,6 +119,7 @@
                                                 <th>Artisan</th>
                                                 <th>Address</th>
                                                 <th>Size</th>
+                                                <th>Qty</th>
                                                 <th>Price</th>
                                                 <th>Material</th>
                                                 <th>Image</th>
@@ -228,7 +229,7 @@
                               <label for="productSize" class="form-label">Product Size & Price</label>
                               <div class="row g-2 align-items-center">
                                 <!-- Product Size Dropdown -->
-                                <div class="col-md-7">
+                                <div class="col-md-5">
                                   <select class="form-select" id="productSize" name="productSize" required>
                                     <option value="" disabled selected>Select product size</option>
                                     <option value="sm">Small</option>
@@ -238,8 +239,12 @@
                                   </select>
                                 </div>
                                 <!-- Price Input -->
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                   <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Price" min="0" step="0.01" required>
+                                </div>
+                                <!-- Quantity Input -->
+                                <div class="col-md-3">
+                                  <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Quantity" min="0" step="0.01" required>
                                 </div>
                               </div>
                             </div>
@@ -311,7 +316,7 @@
                                 <label for="editProductSize" class="form-label">Product Size & Price</label>
                                 <div class="row g-2 align-items-center">
                                     <!-- Product Size Dropdown -->
-                                    <div class="col-md-7">
+                                    <div class="col-md-5">
                                         <select class="form-select" id="editProductSize" name="editProductSize" required>
                                             <option value="" disabled selected>Select product size</option>
                                             <option value="sm">Small</option>
@@ -321,9 +326,13 @@
                                         </select>
                                     </div>
                                     <!-- Price Input -->
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <input type="number" class="form-control" id="editProductPrice" name="editProductPrice" placeholder="Price" min="0" step="0.01" required>
                                     </div>
+                                    <!-- Quantity Input -->
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control" id="editProductQuantity" name="editProductQuantity" placeholder="Quantity" required>
+                                      </div>
                                 </div>
                             </div>
 
@@ -739,38 +748,40 @@
 
                             // Create table cells with product details
                             row.innerHTML = `
-                                <td>${product.category_name}</td>
-                                <td>${product.type_names}</td>
-                                <td class="w-25">${product.description}</td>
-                                <td>${product.owner}</td>
-                                <td>${product.adress}</td>
-                                <td>${product.size}</td>
-                                <td>${product.price}</td>
-                                <td>${product.material}</td>
-                                <td>
-                                    <img
-                                        src="mysql/${product.image}"
-                                        alt="${product.category_name}"
-                                        style="width: 30px; height: auto; cursor: pointer;"
-                                        onclick="viewImage('${product.image}', '${product.category_name}')"
-                                    >
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" onclick="editProduct(
-                                        ${product.id},
-                                        '${product.category_id}',
-                                        '${product.type_names}',
-                                        '${product.description.replace(/'/g, "\\'")}', // Escape single quotes
-                                        '${product.owner.replace(/'/g, "\\'")}',
-                                        '${product.adress.replace(/'/g, "\\'")}',
-                                        '${product.size}',
-                                        '${product.price}',
-                                        '${product.material.replace(/'/g, "\\'")}',
-                                        '${product.image}'
-                                    )"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-danger delete-btn" onclick="confirmDeleteProduct(${product.id});"><i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            `;
+                                  <td>${product.category_name}</td>
+                                  <td>${product.type_names}</td>
+                                  <td class="w-25">${product.description}</td>
+                                  <td>${product.owner}</td>
+                                  <td>${product.adress}</td>
+                                  <td>${product.size}</td>
+                                  <td>${product.qty}</td>
+                                  <td>${product.price}</td>
+                                  <td>${product.material}</td>
+                                  <td>
+                                      <img
+                                          src="mysql/${product.image}"
+                                          alt="${product.category_name}"
+                                          style="width: 30px; height: auto; cursor: pointer;"
+                                          onclick="viewImage('${product.image}', '${product.category_name}')"
+                                      >
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-primary btn-sm" onclick="editProduct(
+                                          ${product.id},
+                                          '${product.category_id}',
+                                          '${product.type_names}',
+                                          '${product.description.replace(/'/g, "\\'")}',
+                                          '${product.owner.replace(/'/g, "\\'")}',
+                                          '${product.adress.replace(/'/g, "\\'")}',
+                                          '${product.size}',
+                                          '${product.price}',
+                                          '${product.material.replace(/'/g, "\\'")}',
+                                          '${product.image}',
+                                          ${product.qty}
+                                      )"><i class="fas fa-edit"></i></button>
+                                      <button class="btn btn-sm btn-danger delete-btn" onclick="confirmDeleteProduct(${product.id});"><i class="fas fa-trash-alt"></i></button>
+                                  </td>
+                              `;
 
                             // Append the row to the table body
                             productTableBody.appendChild(row);
@@ -829,17 +840,20 @@
             });
         });
 
-        function editProduct(id, categoryName, typeNames, description, owner, address, size, price, material, image) {
-            // Populate the edit modal with the product details
+        function editProduct(id, categoryName, typeNames, description, owner, address, size, price, material, image, qty) {
+            // Populate the form fields
             document.getElementById('editproductId').value = id;
             document.getElementById('editProductCategory').value = categoryName;
-            document.getElementById('editProductType').value = typeNames; // Assuming this is a comma-separated string
+            document.getElementById('editProductType').value = typeNames; // assuming comma-separated
             document.getElementById('editProductDescription').value = description;
             document.getElementById('editProductArtisan').value = owner;
             document.getElementById('editProductAddress').value = address;
             document.getElementById('editProductSize').value = size;
             document.getElementById('editProductPrice').value = price;
             document.getElementById('editProductMaterials').value = material;
+
+            // Set the quantity
+            document.getElementById('editProductQuantity').value = qty;
 
             // Handle image preview
             const imageElement = document.getElementById('editProductImagePreview');
@@ -849,7 +863,7 @@
                 imageElement.style.display = 'block';
             }
 
-            // Show the modal
+            // Show modal
             const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal'));
             editProductModal.show();
         }

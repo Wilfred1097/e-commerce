@@ -1,6 +1,8 @@
 <?php
 // Include database connection
 include 'conn.php';
+// For debugging
+error_log('POST data: ' . print_r($_POST, true));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve POST data
@@ -8,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['editProductCategory'] ?? null;
     $size = $_POST['editProductSize'] ?? null;
     $price = $_POST['editProductPrice'] ?? null;
+    $qty = $_POST['editProductQuantity'] ?? null;
     $type_names = $_POST['editProductType'] ?? null; // Assuming this is a comma-separated string of type names
     $description = $_POST['editProductDescription'] ?? null;
     $owner = $_POST['editProductArtisan'] ?? null;
@@ -16,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = $_FILES['editProductImage'] ?? null;
 
     // Validate inputs
-    if (!$product_id || !$category_id || !$type_names || !$description || !$owner || !$size || !$material || !$address || !$price) {
+    if (!$product_id || !$category_id || !$type_names || !$description || !$owner || !$size || !$material || !$address || !$price || !$qty) {
         http_response_code(400);
         echo json_encode([
             'status' => 'error',
@@ -70,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 `size` = :size,
                 `material` = :material,
                 `adress` = :address,
-                `price` = :price
+                `price` = :price,
+                `qty` = :qty
         ";
 
         // Append image update if a new image is provided
@@ -91,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':material', $material);
         $stmt->bindParam(':address', $address);
         $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':qty', $qty);
         $stmt->bindParam(':product_id', $product_id);
 
         // Bind image path if provided
