@@ -851,12 +851,12 @@
                     if (response.status === 'success' && response.data.length > 0) {
                         response.data.forEach(function(product) {
                             const productHtml = `
-                                <div class="col-lg-4 menu-item justify-content-center">
+                                <div class="col-lg-4 menu-item justify-content-center p-4">
                                     <a href="main/template/mysql/${product.image}" target="_blank" class="glightbox">
                                         <img src="main/template/mysql/${product.image}" class="menu-img img-fluid" alt="${product.description}">
                                     </a>
-                                    <h4>${product.owner}</h4>
-                                    <p class="ingredients">${product.description}</p>
+                                    <p style="font-size: 13px;">${product.description}</p>
+                                    <h5>Artisans: ${product.owner}</h5>
                                     <p class="price">₱${product.price}</p>
                                 </div>
                             `;
@@ -924,8 +924,8 @@
                                                 <a href="main/template/mysql/${product.image}" target="_blank" class="glightbox">
                                                     <img src="main/template/mysql/${product.image}" class="menu-img img-fluid" alt="${product.description}">
                                                 </a>
-                                                <h4>${product.owner}</h4>
-                                                <p class="ingredients">${product.description}</p>
+                                                <p style="font-size: 13px; padding: 0px, 5px, 0px, 5px;">${product.description}</p>
+                                                <h5>Artisans: ${product.owner}</h5>
                                                 <p class="price">₱${product.price}</p>
                                             </div>
                                         `;

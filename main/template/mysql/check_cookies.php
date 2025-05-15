@@ -1,6 +1,6 @@
 <?php
 // Check if the 'brgy' cookie is present
-if (!isset($_COOKIE['brgy'])) {
+if (!isset($_COOKIE['DWHMA'])) {
     echo json_encode([
         "status" => "error",
         "message" => "Access denied!"

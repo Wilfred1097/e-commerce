@@ -5,18 +5,18 @@ session_start(); // Start session to store user role
 header("Content-Type: application/json"); // Ensures JSON response
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if (empty($username) || empty($password)) {
+    if (empty($email) || empty($password)) {
         echo json_encode(["status" => "error", "message" => "All fields are required!"]);
         exit;
     }
 
     try {
         // Fetch user from the database using username
-        $stmt = $pdo->prepare("SELECT id, username, role, gmail, first_name, middle_name, last_name, image_path, password, status FROM users WHERE username = ?");
-        $stmt->execute([$username]);
+        $stmt = $pdo->prepare("SELECT id, username, role, gmail, first_name, middle_name, last_name, image_path, password, status FROM users WHERE gmail = ?");
+        $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Define helper functions outside the logic blocks
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     "image_path" => $user['image_path']
                 ]);
 
-                setcookie("brgy", $userData, time() + (7 * 24 * 60 * 60), "/");
+                setcookie("DWHMA", $userData, time() + (7 * 24 * 60 * 60), "/");
 
                 // ✅ Log login info only on successful login
                 // $ip = getUserIP();

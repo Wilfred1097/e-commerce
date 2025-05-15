@@ -1,11 +1,11 @@
 <?php
 session_start();
-require './mysql/conn.php'; // Adjust path to conn.php if necessary
+require 'main/template/mysql/conn.php'; // Ensure this initializes $pdo as PDO
 
 // Retrieve the email from the session
 $email = $_SESSION['user_email'] ?? null;
 
-// Check if the email is set; if not, redirect to registration page
+// Check if the email is set; if not, redirect to registration page (optional)
 // if (!$email) {
 //     header("Location: ../pages-register.php");
 //     exit;
@@ -18,57 +18,60 @@ $errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $enteredOtp = htmlspecialchars($_POST['otp'] ?? '');
 
-      // Validate OTP input
-      if (empty($enteredOtp)) {
-          echo '<p class="text-danger">Please enter the OTP.</p>';
-      } else {
-          // Prepare the SQL query to check the OTP
-          $sql = "SELECT email, user_type FROM user WHERE email = ? AND otp = ?";
-          $stmt = $conn->prepare($sql);
+    // Validate OTP input
+    if (empty($enteredOtp)) {
+        echo '<p class="text-danger">Please enter the OTP.</p>';
+    } else {
+        // Prepare the SQL query to check the OTP
+        $sql = "SELECT gmail, role FROM users WHERE gmail = :gmail AND activate_code = :activate_code";
+        $stmt = $pdo->prepare($sql);
 
-          if ($stmt === false) {
-              die("Error preparing query: " . $conn->error);
-          }
+        try {
+            // Execute the SQL statement
+            $stmt->execute([
+                ':gmail' => $email,
+                ':activate_code' => $enteredOtp
+            ]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-          // Execute the SQL statement
-          $stmt->bind_param("ss", $email, $enteredOtp);
-          $stmt->execute();
-          $result = $stmt->get_result(); // Get the result set from the statement
+            if ($user) {
+                // Update the status to '1' (approved)
+                $updateSql = "UPDATE users SET status = '1' WHERE gmail = :gmail AND activate_code = :activate_code";
+                $updateStmt = $pdo->prepare($updateSql);
+                $updateStmt->execute([
+                    ':gmail' => $email,
+                    ':activate_code' => $enteredOtp
+                ]);
 
-          if ($result->num_rows > 0) {
-              $user = $result->fetch_assoc(); // Fetch user data
+                // Set a cookie for the user_email and user_type
+                $user_data = json_encode(['email' => $user['gmail'], 'role' => $user['role']]);
+                setcookie('DWHMA', $user_data, time() + 3600, '/', '', false, true); // Cookie valid for 1 hour
 
-              // Update the status to 'approved'
-              $updateSql = "UPDATE user SET status = 'verified' WHERE email = ? AND otp = ?";
-              $updateStmt = $conn->prepare($updateSql);
-
-              if ($updateStmt === false) {
-                  die("Error preparing update query: " . $conn->error);
-              }
-
-              $updateStmt->bind_param("ss", $email, $enteredOtp);
-              $updateStmt->execute();
-
-              // Set a cookie for the user_email and user_type
-              $user_data = json_encode(['email' => $user['email'], 'user_type' => $user['user_type']]);
-              setcookie('SmartSpot', $user_data, time() + 3600, '/', '', false, true); // Cookie valid for 1 hour
-
-              // Redirect to index.php
-              header("Location: index.php");
-              exit;
-          } else {
-              $errorMessage = 'Invalid OTP. Please try again.';
-          }
-      }
+                // Redirect to dashboard
+                header("Location: main/template/dashboard.php");
+                exit;
+            } else {
+                $errorMessage = 'Invalid OTP. Please try again.';
+            }
+        } catch (PDOException $e) {
+            die("Database error: " . $e->getMessage());
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    body {
+        background: url('assets/img/baskets.png') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        }
+  </style>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SmartSpot - Confirm OTP</title>
+  <title>DWHMA Online Store - Confirm OTP</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 

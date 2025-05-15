@@ -1,12 +1,12 @@
 <?php
-require_once './mysql/check-cookies.php'; 
-require './mysql/conn.php'; // Adjust path to conn.php if necessary
+// require_once 'main/template/mysql/check_cookies.php';
+require 'main/template/mysql/conn.php'; // Ensure this sets $conn as a PDO instance
 
 $email = $_GET['email'] ?? '';
 
 // Check if the email is provided
 if (empty($email)) {
-    header("Location: pages-error-404.php");
+    header("Location: pages-reset-password.php");
     exit;
 }
 
@@ -33,27 +33,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
         // Prepare SQL statement to update the password
-        $sql = "UPDATE user SET password = ? WHERE email = ?";
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param('ss', $hashedPassword, $email);
-
-            if ($stmt->execute()) {
+        $sql = "UPDATE users SET password = ? WHERE gmail = ?";
+        try {
+            $stmt = $pdo->prepare($sql);
+            // Execute with bound parameters
+            if ($stmt->execute([$hashedPassword, $email])) {
                 // Password updated successfully
-                header("Location: pages-login.php");
+                header("Location: login-page.php");
                 exit;
             } else {
                 $error = 'Failed to update the password. Please try again.';
             }
-
-            $stmt->close();
-        } else {
-            $error = 'Failed to prepare the SQL statement.';
+        } catch (PDOException $e) {
+            $error = 'Error: ' . $e->getMessage();
         }
     }
 }
 
 // Close database connection
-$conn->close();
+$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +60,7 @@ $conn->close();
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SmartSpot - New Password</title>
+  <title>DWHMA Online Store - New Password</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Favicons -->
@@ -80,9 +78,15 @@ $conn->close();
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="main/assets/css/style.css" rel="stylesheet">
 </head>
-
+<style>
+    body {
+        background: url('assets/img/baskets.png') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        }
+  </style>
 <body>
 
   <main>
@@ -118,7 +122,7 @@ $conn->close();
                     </div>
 
                     <div class="col-12">
-                        <button class="btn btn-primary w-100" style="background-color: #6600FF; color: white;" type="submit">Save Password</button>
+                        <button class="btn btn-success w-100" type="submit">Save Password</button>
                     </div>
                 </form>
 

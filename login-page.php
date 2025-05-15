@@ -27,7 +27,7 @@
     <!-- Whether Icon css-->
     <link rel="stylesheet" type="text/css" href="main/assets/css/vendors/weather-icons/weather-icons.min.css">
     <!-- App css -->
-    <link rel="stylesheet" href="main/assets/css/style.css">
+    <link href="main/assets/css/style.css" rel="stylesheet">
     <link id="color" rel="stylesheet" href="main/assets/css/color-1.css" media="screen">
   </head>
   <style>
@@ -35,9 +35,6 @@
         background: url('assets/img/baskets.png') no-repeat center center;
         background-size: cover;
         height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
   </style>
   <body>
@@ -59,24 +56,25 @@
                   <h2 class="text-center">Sign in to account</h2>
                   <p class="text-center">Enter your username &amp; password to login</p>
                   <div class="form-group">
-                    <label class="col-form-label">Username</label>
-                    <input class="form-control" type="text" id="username" required placeholder="username">
+                    <label class="col-form-label">Email</label>
+                    <input class="form-control" type="text" id="email" required placeholder="enter email">
                   </div>
                   <div class="form-group">
                     <label class="col-form-label">Password</label>
                     <div class="form-input position-relative">
-                      <input class="form-control" type="password" id="password" name="login[password]" required placeholder="password">
+                      <input class="form-control" type="password" id="password" name="login[password]" required placeholder="enter password">
                       <div class="show-hide"><span class="show"></span></div>
                     </div>
                   </div>
                   <div class="form-group mb-0">
                     <div class="text-end mt-3">
-                      <button class="btn btn-danger btn-block w-100" id="loginButton" type="submit">Sign in</button>
+                      <button class="btn btn-success btn-block w-100" id="loginButton" type="submit">Sign in</button>
                     </div>
                   </div>
-                  <div class="login-social-title">
-                    <h6><a href="pages-register.php">Register</a></h6>
-                  </div>
+                  <div class="col-12 text-center mt-3">
+                      <p class="small mb-0">Don't have an account? <a href="pages-register.php" class="text-success">Create an account</a></p><hr>
+                      <p class="small mb-0">Forgot your password? <a href="pages-reset-password.php" class="text-success">Reset Here</a></p>
+                    </div>
                 </form>
               </div>
             </div>
@@ -100,7 +98,7 @@
           document.getElementById("loginForm").addEventListener("submit", function(event) {
               event.preventDefault(); // Prevent default form submission
 
-              let username = document.getElementById("username").value;
+              let email = document.getElementById("email").value;
               let password = document.getElementById("password").value;
               let loginButton = document.getElementById("loginButton");
 
@@ -111,7 +109,7 @@
               fetch("main/template/mysql/login.php", {
                   method: "POST",
                   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                  body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+                  body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
               })
               .then(response => response.json())
               .then(data => {

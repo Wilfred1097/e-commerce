@@ -1,12 +1,12 @@
 <?php
-require './mysql/conn.php'; // Adjust path to conn.php if necessary
+require 'main/template/mysql/conn.php'; // Ensure this provides a PDO connection in $conn
 
 // Retrieve the email from the query parameters
 $email = $_GET['email'] ?? '';
 
 // Check if the email is provided
 if (empty($email)) {
-    header("Location: pages-error-404.php");
+    header("Location: pages-reset-password.php");
     exit;
 }
 
@@ -22,27 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<p class="text-danger">Please enter the OTP.</p>';
     } else {
         // Prepare the SQL query to check the OTP
-        $stmt = $conn->prepare("SELECT * FROM user WHERE email = ? AND otp = ?");
-        if ($stmt === false) {
-            die("Error preparing query: " . $conn->error);
-        }
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE gmail = ? AND reset_code = ?");
+        try {
+            // Execute with parameters
+            $stmt->execute([$email, $enteredOtp]);
+            $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Bind parameters and execute the statement
-        $stmt->bind_param("ss", $email, $enteredOtp);
-        $stmt->execute();
-        $result = $stmt->get_result(); // Get the result set from the statement
-
-        $customer = $result->fetch_assoc();
-
-        if ($customer) {
-            // Construct the URL with query parameters
-            $redirectUrl = 'pages-new-password.php?email=' . urlencode($email);
-
-            // Redirect to the constructed URL
-            header('Location: ' . $redirectUrl);
-            exit;
-        } else {
-            $errorMessage = 'Invalid OTP. Please try again.';
+            if ($customer) {
+                // Construct the URL with query parameters
+                $redirectUrl = 'pages-new-password.php?email=' . urlencode($email);
+                header('Location: ' . $redirectUrl);
+                exit;
+            } else {
+                $errorMessage = 'Invalid OTP. Please try again.';
+            }
+        } catch (PDOException $e) {
+            die("Error executing query: " . $e->getMessage());
         }
     }
 }
@@ -50,11 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    body {
+        background: url('assets/img/baskets.png') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        }
+  </style>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SmartSpot - Confirm OTP</title>
+  <title>DWHMA Online Store- Confirm OTP</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -76,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="main/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>

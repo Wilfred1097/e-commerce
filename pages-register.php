@@ -23,11 +23,11 @@
 
   <!-- Include SweetAlert CSS and JS -->
   <script src="main/assets/js/sweetalert/sweetalert2.min.js"></script>
-
+  <!-- Template Main CSS File -->
+  <link href="main/assets/css/style.css" rel="stylesheet">
 </head>
-
-<!-- <body style="background-image: url('./assets/img/parking1.jpg'); background-repeat: no-repeat; background-size: cover;"> -->
-<body>
+<body style="background-image: url('assets/img/baskets.png'); background-repeat: no-repeat; background-size: cover;">
+<!-- <body> -->
 
   <main>
     <div class="container">
@@ -35,7 +35,7 @@
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6 col-md-12 d-flex flex-column align-items-center justify-content-center">
               <div class="card mb-3">
 
                 <div class="card-body">
@@ -46,33 +46,39 @@
                   </div>
 
                   <form class="row g-3" id="registrationForm" novalidate method="POST" action="homepage/mysql/register.php">
-                    <div class="col-md-12">
+                    <div class="col-md-4 col-lg-4">
                         <div class="form-floating">
-                            <input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name" required>
                             <label for="first_name">First Name</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4 col-lg-4">
                         <div class="form-floating">
                             <input type="text" name="middle_name" class="form-control" id="middle_name" placeholder="Middle Name">
                             <label for="middle_name">Middle Name</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4 col-lg-4">
                         <div class="form-floating">
-                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name">
+                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" required>
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-lg-6">
                         <div class="form-floating">
-                            <input type="text" name="address" class="form-control" id="address" placeholder="Address">
+                            <input type="text" name="address" class="form-control" id="address" placeholder="Address" required>
                             <label for="address">Address</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-floating mb-3">
-                            <select name="gender" class="form-select" id="gender" aria-label="Gender">
+                    <div class="col-md-6 col-lg-6">
+                        <div class="form-floating">
+                            <input type="date" name="dob" class="form-control" id="dob" required>
+                            <label for="dob">Date of Birth</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="form-floating">
+                            <select name="gender" class="form-select" id="gender" aria-label="Gender" required>
                                 <option value="" disabled selected>Select your gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -81,28 +87,34 @@
                             <label for="gender">Select your gender</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-lg-6">
                         <div class="form-floating">
-                            <input type="tel" name="contact_number" class="form-control" id="contact_number" placeholder="Contact Number">
+                            <input type="tel" name="contact_number" class="form-control" id="contact_number" placeholder="Contact Number" required>
                             <label for="contact_number">Contact Number</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-lg-6">
                         <div class="form-floating">
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
                             <label for="email">Email</label>
                             <div id="emailTooltip" class="tooltip"></div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-lg-6">
                         <div class="form-floating">
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                            <input type="username" name="username" class="form-control" id="username" placeholder="Email" required>
+                            <label for="username">Username</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="form-floating">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                             <label for="password">Password</label>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6 col-lg-6">
                         <div class="form-floating">
-                            <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" placeholder="Confirm Password">
+                            <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" placeholder="Confirm Password" required>
                             <label for="confirmpassword">Confirm password</label>
                             <div id="passwordTooltip" class="tooltip"></div>
                         </div>
@@ -111,11 +123,11 @@
                     <input type="hidden" name="otp" id="otp">
 
                     <div class="col-12">
-                        <button id="submitBtn" class="btn btn-danger btn-block w-100" type="submit">Create Account</button>
+                        <button class="btn w-100 btn-success" type="submit">Create Account</button>
                     </div>
 
                     <div class="col-12 text-center">
-                        <p class="small mb-0">Already have an account? <a href="login-page.php">Log in</a></p>
+                        <p class="small mb-0">Already have an account? <a class="text-decoration-none text-success" href="login-page.php">Log in</a></p>
                     </div>
                 </form>
 
@@ -133,6 +145,8 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <script>
+
+  const submitButton = document.querySelector('#registrationForm button[type="submit"]');
   // Function to check if email exists in the database
   async function checkEmailExistence(email) {
       try {
@@ -151,42 +165,41 @@
       }
   }
 
-  const submitBtn = document.getElementById('submitBtn');
+  // Function to handle email input
+    document.getElementById('email').addEventListener('input', async function () {
+        const emailInput = this;
+        const email = emailInput.value;
+        const tooltip = document.getElementById('emailTooltip');
 
-  document.getElementById('email').addEventListener('input', async function () {
-      const emailInput = this;
-      const email = emailInput.value;
-      const tooltip = document.getElementById('emailTooltip');
+        if (email) {
+            const exists = await checkEmailExistence(email);
 
-      if (email) {
-          const exists = await checkEmailExistence(email);
+            if (exists) {
+                emailInput.style.borderColor = 'red'; // Set border color to red if email exists
+                emailInput.setCustomValidity('This email is already registered.');
+                tooltip.textContent = 'This email is already registered'; // Tooltip message
+                tooltip.classList.add('show');
 
-          if (exists) {
-              emailInput.style.borderColor = 'red'; // Set border color to red if email exists
-              emailInput.setCustomValidity('This email is already registered.');
-              tooltip.textContent = 'This email is already registered'; // Tooltip message
-              tooltip.classList.add('show');
+                // Disable submit button if email exists
+                if (submitButton) submitButton.disabled = true;
+            } else {
+                emailInput.style.borderColor = 'green'; // Set border color to green if email does not exist
+                emailInput.setCustomValidity('Looks good!');
+                tooltip.textContent = 'Looks good!';
+                tooltip.classList.remove('show'); // Show tooltip
 
-              // Disable submit button
-              document.getElementById('submitBtn').disabled = true;
-          } else {
-              emailInput.style.borderColor = 'green'; // Set border color to green if email does not exist
-              emailInput.setCustomValidity('Looks good!');
-              tooltip.textContent = 'Looks good!';
-              tooltip.classList.add('show');
+                // Enable submit button if email does not exist
+                if (submitButton) submitButton.disabled = false;
+            }
+        } else {
+            emailInput.style.borderColor = ''; // Reset border color if input is empty
+            emailInput.setCustomValidity('');
+            tooltip.classList.remove('show'); // Hide tooltip
 
-              // Enable submit button
-              document.getElementById('submitBtn').disabled = false;
-          }
-      } else {
-          emailInput.style.borderColor = ''; // Reset border color if input is empty
-          emailInput.setCustomValidity('');
-          tooltip.classList.remove('show');
-
-          // Enable submit button if email is empty
-          document.getElementById('submitBtn').disabled = false;
-      }
-  });
+            // Enable submit button if email input is empty
+            if (submitButton) submitButton.disabled = false;
+        }
+    });
 
   // Function to handle password and confirmPassword input
   function handlePasswordAndConfirmPasswordInput() {
@@ -308,7 +321,7 @@
       });
 
       try {
-          const response = await fetch('homepage/mysql/send_otp.php', {
+          const response = await fetch('homepage/mysql/send-otp.php', {
               method: 'POST',
               body: formData
           });
@@ -375,7 +388,7 @@
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <!-- SweetAlert library -->
-  <script src="main/assets/js/sweetalert/sweetalert2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

@@ -5,7 +5,6 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
-require_once __DIR__ . '/../config/config.php';
 
 // Retrieve POST data
 $email = $_POST['email'] ?? '';
@@ -23,15 +22,15 @@ $mail = new PHPMailer(true);
 
 try {
     $mail->isSMTP();
-    $mail->Host = getenv('SMTP_HOST');
+    $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = getenv('SMTP_USERNAME');
-    $mail->Password = getenv('SMTP_PASSWORD');
+    $mail->Username = 'catalanwilfredo97@gmail.com';
+    $mail->Password = 'sykmmtpojmudqbik';
     $mail->SMTPSecure = 'tls';
-    $mail->Port = getenv('SMTP_PORT');
+    $mail->Port = '587';
 
     // Recipients
-    $mail->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
+    $mail->setFrom('mr.daotz97@gmail.com', 'Dumingag Women Handicrafts Makers Association');
     $mail->addAddress($email, "$fname $mname $lname");
 
     // Content

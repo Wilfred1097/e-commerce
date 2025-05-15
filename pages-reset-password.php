@@ -29,9 +29,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="main/assets/css/style.css" rel="stylesheet">
 </head>
-
+ <style>
+    body {
+        background: url('assets/img/baskets.png') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        }
+  </style>
 <body>
 
   <main>
@@ -64,7 +70,7 @@
                     </div>
                     <div class="col-12 text-center">
                         <!-- <p class="small mb-0">Don't have an account? <a href="pages-register.php">Create an account</a></p><hr> -->
-                        <p class="small mb-0">Go back to <a class="text-success" href="pages-login.php">Login page</a></p>
+                        <p class="small mb-0">Go back to <a class="text-success text-decoration-none" href="login-page.php">Login page</a></p>
                     </div>
                 </form>
 
@@ -110,19 +116,19 @@
             var email = $('#email').val();
 
             $.ajax({
-                url: 'mysql/check-email.php',
+                url: 'homepage/mysql/check_email.php',
                 type: 'GET', // Use GET since we're reading data
                 data: { email: email },
                 dataType: 'json',
                 success: function(response) {
                     if (response.exists) {
-                        const { fname, mname, lname, email } = response.user;
+                        const { first_name, middle_name, last_name, gmail } = response.user;
                         const otp = Math.floor(100000 + Math.random() * 900000);
 
                         // Show a loading alert with a message
                         Swal.fire({
                             title: 'Sending OTP...',
-                            text: `Sending OTP to your email (${email})`,
+                            text: `Sending OTP to your email (${gmail})`,
                             icon: 'info',
                             didOpen: () => {
                                 Swal.showLoading();
@@ -131,13 +137,13 @@
                         });
 
                         $.ajax({
-                            url: 'mysql/resend-otp.php',
+                            url: 'homepage/mysql/resend-otp.php',
                             type: 'POST',
                             data: {
-                                fname: fname,
-                                mname: mname,
-                                lname: lname,
-                                email: email,
+                                fname: first_name,
+                                mname: middle_name,
+                                lname: last_name,
+                                email: gmail,
                                 otp: otp
                             },
                             success: function(resendResponse) {
@@ -155,7 +161,7 @@
                                         text: 'A new OTP verification code was sent to your email address.',
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            const redirectUrl = `pages-confirm-new-otp.php?email=${encodeURIComponent(email)}`;
+                                            const redirectUrl = `pages-confirm-new-otp.php?email=${encodeURIComponent(gmail)}`;
                                             window.location.href = redirectUrl;
                                         }
                                     });

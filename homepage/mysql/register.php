@@ -1,7 +1,6 @@
 <?php
 session_start();
-require 'conn.php'; // Adjust path to conn.php if necessary
-
+include './../../main/template/mysql/conn.php';
 
 // Retrieve and sanitize form inputs
 $firstName = htmlspecialchars($_POST['first_name'] ?? '');
@@ -14,6 +13,8 @@ $email = htmlspecialchars($_POST['email'] ?? '');
 $password = htmlspecialchars($_POST['password'] ?? '');
 $confirmPassword = htmlspecialchars($_POST['confirmpassword'] ?? '');
 $otp = htmlspecialchars($_POST['otp'] ?? '');
+$dob = htmlspecialchars($_POST['dob'] ?? '');
+$username = htmlspecialchars($_POST['username'] ?? '');
 
 // Validate required fields
 $errors = [];
@@ -25,6 +26,8 @@ if (empty($contactNumber) || strlen($contactNumber) !== 11) $errors[] = "Contact
 if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "A valid Email is required.";
 if (empty($password)) $errors[] = "Password is required.";
 if ($password !== $confirmPassword) $errors[] = "Passwords do not match.";
+if (empty($dob)) $errors[] = "Date of Birth is required.";
+if (empty($username)) $errors[] = "Username is required.";
 
 // Handle errors
 if (!empty($errors)) {
@@ -39,38 +42,45 @@ if (!empty($errors)) {
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 // Prepare the SQL query
-$sql = "INSERT INTO user (first_name, middle_name, last_name, address, gender, cont, email, password, otp, status, user_type, profile)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO users (first_name, middle_name, last_name, address, gender, cont, gmail, password, activate_code, status, role, image_path, dob, username)
+        VALUES (:first_name, :middle_name, :last_name, :address, :gender, :cont, :gmail, :password, :activate_code, :status, :role, :image_path, :dob, :username)";
 
-// Prepare SQL statement
-$stmt = $conn->prepare($sql);
-if ($stmt === false) {
-    die("Error preparing query: " . $conn->error);
-}
+// Set default values for role and profile
+$role = 'user'; // or whatever default role you want
+$profile = '../../main/template/uploads/profile/user.jpg'; // or default profile image
+$status = '0'; // assuming '1' means active
 
-// Execute SQL statement with form data
-$status = 'pending'; // Default status
-$user_type = 'staff';
-$profile = 'admin.jpg';
-$stmt->bind_param("ssssssssssss", $firstName, $middleName, $lastName, $address, $gender, $contactNumber, $email, $hashedPassword, $otp, $status, $user_type, $profile);
-// Store email in session
-$_SESSION['user_email'] = $email;
-$_SESSION['first_name'] = $firstName;
-$_SESSION['middle_name'] = $middleName;
-$_SESSION['last_name'] = $lastName;
-$_SESSION['user_otp'] = $otp;
+try {
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':first_name' => $firstName,
+        ':middle_name' => $middleName,
+        ':last_name' => $lastName,
+        ':address' => $address,
+        ':gender' => $gender,
+        ':cont' => $contactNumber,
+        ':gmail' => $email,
+        ':password' => $hashedPassword,
+        ':activate_code' => $otp,
+        ':status' => $status,
+        ':role' => $role,
+        ':image_path' => $profile,
+        ':dob' => $dob,
+        ':username' => $username
+    ]);
 
-// Execute the statement
-if ($stmt->execute()) {
+    // Store data in session
+    $_SESSION['user_email'] = $email;
+    $_SESSION['first_name'] = $firstName;
+    $_SESSION['middle_name'] = $middleName;
+    $_SESSION['last_name'] = $lastName;
+    $_SESSION['user_otp'] = $otp;
+
     // Redirect to confirmation page
     echo '<script>
-            window.location.href = "../pages-confirm-otp.php";
+            window.location.href = "../../pages-confirm-otp.php";
           </script>';
-} else {
-    echo "Error: " . $stmt->error;
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
 }
-
-// Close the statement and connection
-$stmt->close();
-$conn->close();
 ?>
