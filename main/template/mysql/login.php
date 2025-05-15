@@ -65,24 +65,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     "image_path" => $user['image_path']
                 ]);
 
-                setcookie("DWHMA", $userData, time() + (7 * 24 * 60 * 60), "/");
+                // Determine cookie name based on user role
+                $cookieName = ($user['role'] === 'admin') ? 'DWHMA1' : (($user['role'] === 'user') ? 'DWHMA0' : 'DWHMA');
+
+                setcookie($cookieName, $userData, time() + (7 * 24 * 60 * 60), "/");
 
                 // ✅ Log login info only on successful login
-                // $ip = getUserIP();
-                // $location = getLocation($ip);
-                // $userAgent = $_SERVER['HTTP_USER_AGENT'];
+                $ip = getUserIP();
+                $location = getLocation($ip);
+                $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-                // $logStmt = $pdo->prepare("INSERT INTO login_logs (user_id, ip_address, city, region, country, device_info) VALUES (?, ?, ?, ?, ?, ?)");
-                // $logStmt->execute([
-                //     $user['id'],
-                //     $ip,
-                //     $location['city'],
-                //     $location['region'],
-                //     $location['country'],
-                //     $userAgent
-                // ]);
+                $logStmt = $pdo->prepare("INSERT INTO login_logs (user_id, ip_address, city, region, country, device_info) VALUES (?, ?, ?, ?, ?, ?)");
+                $logStmt->execute([
+                    $user['id'],
+                    $ip,
+                    $location['city'],
+                    $location['region'],
+                    $location['country'],
+                    $userAgent
+                ]);
 
-                echo json_encode(["status" => "success", "message" => "Login successful!"]);
+                // Return success response with role
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Login successful!",
+                    "role" => $user['role']
+                ]);
             } else {
                 echo json_encode(["status" => "error", "message" => "Invalid username or password"]);
             }

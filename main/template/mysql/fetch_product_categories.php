@@ -1,6 +1,7 @@
 <?php
 // Include database connection
 include 'conn.php';
+require 'check_cookies.php'; // Check if the cookie is present
 
 try {
     // Prepare and execute query to fetch all categories

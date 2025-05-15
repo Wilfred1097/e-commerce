@@ -1,8 +1,3 @@
-<?php
-// Assume the user's role is stored in a session variable
-$userRole = $_SESSION['role'] ?? 'User'; // Default to 'User' if role is not set
-?>
-
 <aside class="page-sidebar">
   <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
   <div class="main-sidebar" id="main-sidebar">
@@ -25,9 +20,6 @@ $userRole = $_SESSION['role'] ?? 'User'; // Default to 'User' if role is not set
               <h6 class="f-w-600">Dashboards</h6>
           </a>
       </li>
-
-      <!-- Show User Management only if the role is Treasurer -->
-      <?php if ($userRole === "treasurer"): ?>
 
       <li class="sidebar-list">
           <i class="fa-solid fa-thumbtack"></i>
@@ -62,8 +54,6 @@ $userRole = $_SESSION['role'] ?? 'User'; // Default to 'User' if role is not set
         </li> -->
 
       <!-- Show User Management only if the role is Treasurer -->
-      <?php endif; ?>
-
     </ul>
   </div>
   <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

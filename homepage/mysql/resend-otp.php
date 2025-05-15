@@ -9,7 +9,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 // Retrieve POST data
-$email = $_POST['email'] ?? '';
+$email = $_POST['gmail'] ?? '';
 $fname = $_POST['first_name'] ?? '';
 $mname = $_POST['middle_name'] ?? '';
 $lname = $_POST['last_name'] ?? '';

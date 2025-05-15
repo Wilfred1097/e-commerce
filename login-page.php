@@ -116,8 +116,13 @@
               .then(response => response.json())
               .then(data => {
                   if (data.status === "success") {
-                      // Redirect to dashboard on successful login
-                      window.location.href = "./main/template/dashboard.php";
+                      if (data.role === "admin") {
+                          // Redirect to admin dashboard
+                          window.location.href = "./main/template/dashboard.php";
+                      } else if (data.role === "user") {
+                          // Redirect to user account page
+                          window.location.href = "account.php";
+                      }
                   } else {
                       // Reset button text and re-enable it
                       loginButton.textContent = "Sign in";

@@ -60,18 +60,29 @@
     </a>
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li class="ms-3 position-relative">
+        <li>
           <a href="pages-cart.php" class="d-flex align-items-center" title="Cart">
-            <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+            Cart
             <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" style="display: none;">
               0
             </span>
           </a>
         </li>
         <li class="ms-3">
-          <a href="login-page.php" class="d-flex align-items-center" title="User Profile">
-            <i class="bi bi-person" style="font-size: 1.5rem;"></i>
-          </a>
+          <?php
+            if (isset($_COOKIE['DWHMA0'])) {
+                // Show Profile and Logout links side by side
+                echo '<div style="display: flex; gap: 10px;">'; // flex container with gap
+                echo '<a href="account.php" class="d-flex align-items-center" title="Profile">Profile</a>';
+                echo '<a href="homepage/mysql/logout.php" class="d-flex align-items-center" title="Logout">Logout</a>';
+                echo '</div>';
+            } else {
+                // Show Login icon
+                echo '<a href="login-page.php" class="d-flex align-items-center" title="Login">';
+                echo '<i class="bi bi-person" style="font-size: 1.5rem;"></i>';
+                echo '</a>';
+            }
+          ?>
         </li>
       </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

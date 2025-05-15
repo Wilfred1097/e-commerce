@@ -139,10 +139,10 @@
                             url: 'homepage/mysql/resend-otp.php',
                             type: 'POST',
                             data: {
-                                fname: first_name,
-                                mname: middle_name,
-                                lname: last_name,
-                                email: gmail,
+                                first_name: first_name,
+                                middle_name: middle_name,
+                                last_name: last_name,
+                                gmail: gmail,
                                 otp: otp
                             },
                             success: function(resendResponse) {
