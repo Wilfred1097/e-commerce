@@ -58,3 +58,33 @@
 [2025-05-16 18:40:08] Inserted order item 
 [2025-05-16 18:40:08] Added tracking record 
 [2025-05-16 18:40:08] Transaction committed successfully 
+[2025-05-16 20:36:08] Received order data: {"user_id":18,"payment_method":"COD","delivery_address":"Mahayag","total_amount":1240,"items":[{"productId":6,"availableQty":29,"quantity":3}],"reference_number":null}
+[2025-05-16 20:36:08] Created order with ID: 16 
+[2025-05-16 20:36:08] Processing item: {"productId":6,"availableQty":29,"quantity":3}
+[2025-05-16 20:36:08] Looking up product ID: 6, Quantity: 3 
+[2025-05-16 20:36:08] Product data retrieved: {"id":6,"description":"Step out in style with this handmade twine sling bag! Crafted from durable abaca fibers, it\u2019s eco-friendly, lightweight, and perfect for any adventure. A blend of fashion and function you\u2019ll love.","price":"380.00","qty":"29"}
+[2025-05-16 20:36:08] Available quantity: 29, Requested: 3 
+[2025-05-16 20:36:08] Price: 380, Subtotal: 1140 
+[2025-05-16 20:36:08] Inserted order item 
+[2025-05-16 20:36:08] Added tracking record 
+[2025-05-16 20:36:08] Transaction committed successfully 
+[2025-05-16 20:36:40] Received order data: {"user_id":18,"payment_method":"Pickup","delivery_address":"Pickup","total_amount":250,"items":[{"productId":3,"availableQty":115,"quantity":5}],"reference_number":"1234567890123"}
+[2025-05-16 20:36:40] Created order with ID: 17 
+[2025-05-16 20:36:40] Processing item: {"productId":3,"availableQty":115,"quantity":5}
+[2025-05-16 20:36:40] Looking up product ID: 3, Quantity: 5 
+[2025-05-16 20:36:40] Product data retrieved: {"id":3,"description":"Keep your essentials organized with this handmade abaca pencil case. Durable, eco-friendly, and uniquely stylish\u2014perfect for school, work.","price":"50.00","qty":"115"}
+[2025-05-16 20:36:40] Available quantity: 115, Requested: 5 
+[2025-05-16 20:36:40] Price: 50, Subtotal: 250 
+[2025-05-16 20:36:40] Inserted order item 
+[2025-05-16 20:36:40] Added tracking record 
+[2025-05-16 20:36:40] Transaction committed successfully 
+[2025-05-16 21:14:05] Received order data: {"user_id":18,"payment_method":"COD","delivery_address":"Dumingag","total_amount":220,"items":[{"productId":9,"availableQty":12,"quantity":1}],"reference_number":null}
+[2025-05-16 21:14:05] Created order with ID: 18 
+[2025-05-16 21:14:05] Processing item: {"productId":9,"availableQty":12,"quantity":1}
+[2025-05-16 21:14:05] Looking up product ID: 9, Quantity: 1 
+[2025-05-16 21:14:05] Product data retrieved: {"id":9,"description":"Oversized handmade abaca scrunch bag! Spacious, durable, and eco-friendly\u2014perfect for carrying all your essentials in style while supporting sustainable fashion.","price":"120.00","qty":"12"}
+[2025-05-16 21:14:05] Available quantity: 12, Requested: 1 
+[2025-05-16 21:14:05] Price: 120, Subtotal: 120 
+[2025-05-16 21:14:05] Inserted order item 
+[2025-05-16 21:14:05] Added tracking record 
+[2025-05-16 21:14:05] Transaction committed successfully 

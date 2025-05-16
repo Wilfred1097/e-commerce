@@ -37,13 +37,13 @@
           </a>
       </li>
 
-       <li class="sidebar-list">
+<!--        <li class="sidebar-list">
           <i class="fa-solid fa-thumbtack"></i>
           <a class="sidebar-link" href="user-management.php">
-              <i class="fa-solid fa-users"></i> <!-- Font Awesome Icon for User Management -->
+              <i class="fa-solid fa-users"></i>
               <h6 class="f-w-600">User Management</h6>
           </a>
-      </li>
+      </li> -->
 
       <li class="sidebar-list">
           <i class="fa-solid fa-thumbtack"></i>

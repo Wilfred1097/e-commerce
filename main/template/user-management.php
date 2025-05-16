@@ -119,8 +119,7 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Role</label>
                                     <select class="form-select" id="role" name="role">
-                                        <option value="treasurer">Treasurer</option>
-                                        <option value="encoder">Encoder</option>
+                                        <option value="admin">Admin</option>
                                     </select>
                                 </div>
                                 <!-- Gmail -->
@@ -218,12 +217,15 @@
                             </div>
 
                             <div class="row mt-2">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <label class="form-label">Role</label>
                                     <select class="form-select" id="editRole" name="role">
-                                        <option value="treasurer">Treasurer</option>
-                                        <option value="encoder">Encoder</option>
+                                        <option value="admin">Admin</option>
                                     </select>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="editUsername" name="username" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Gmail</label>
@@ -232,11 +234,7 @@
                             </div>
 
                             <div class="row mt-2">
-                                <div class="col-md-3">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="editUsername" name="username" required>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label class="form-label">Status</label>
                                     <select class="form-select" id="editStatus" name="status">
                                         <option value="1">Active</option>
@@ -582,7 +580,7 @@
                                             <td>${user.address}</td>
                                             <td>${new Date(user.dob).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                             <td>${user.age}</td>
-                                            <td>${user.role === "encoder" ? "Encoder" : user.role === "treasurer" ? "Treasurer" : "Unknown"}</td>
+                                            <td>${user.role === "admin" ? "Admin" : user.role === "user" ? "Customer" : "Unknown"}</td>
                                             <td>${user.gmail}</td>
                                             <td>${user.username}</td>
                                             <td>${user.status == 1 ? "Active" : "Inactive"}</td>

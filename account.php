@@ -102,7 +102,7 @@ if (!isset($_COOKIE['DWHMA0'])) {
 
   <section id="cart-section" class="cart-section section py-5 bg-light">
     <div class="container text-center">
-      <h2 class="mb-4">Customer Account Page</h2>
+      <h2 class="mb-4">Order History</h2>
 
       <!-- Order Tracking Table -->
       <div class="table-responsive">

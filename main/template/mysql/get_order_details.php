@@ -3,8 +3,7 @@ header('Content-Type: application/json');
 
 include 'conn.php';
 
-$sql = "
-        SELECT
+$sql = "SELECT
             o.order_id,
             o.user_id,
             u.first_name,
@@ -16,39 +15,49 @@ $sql = "
             o.order_status AS current_status,
             o.order_date,
             o.updated_at,
+            o.refference_num,
             t.status AS tracking_status,
             t.status_date AS status_updated_at,
             t.comments AS status_comments,
             COUNT(oi.item_id) AS total_items,
-
             GROUP_CONCAT(
                 JSON_OBJECT(
-                    'product_id', oi.product_id,
-                    'quantity', oi.quantity,
-                    'image', p.image
+                    'product_id',
+                    oi.product_id,
+                    'quantity',
+                    oi.quantity,
+                    'image',
+                    p.image
                 )
             ) AS products
-
-        FROM orders o
-        LEFT JOIN users u ON o.user_id = u.id
-        LEFT JOIN order_items oi ON o.order_id = oi.order_id
-        LEFT JOIN products p ON p.id = oi.product_id
-        LEFT JOIN (
-            SELECT
-                ot.order_id,
+        FROM
+            orders o
+        LEFT JOIN users u ON
+            o.user_id = u.id
+        LEFT JOIN order_items oi ON
+            o.order_id = oi.order_id
+        LEFT JOIN products p ON
+            p.id = oi.product_id
+        LEFT JOIN(
+            SELECT ot.order_id,
                 ot.status,
                 ot.status_date,
                 ot.comments
-            FROM order_tracking ot
-            INNER JOIN (
-                SELECT
-                    order_id,
+            FROM
+                order_tracking ot
+            INNER JOIN(
+                SELECT order_id,
                     MAX(status_date) AS max_status_date
-                FROM order_tracking
-                GROUP BY order_id
-            ) latest ON ot.order_id = latest.order_id AND ot.status_date = latest.max_status_date
-        ) t ON o.order_id = t.order_id
-
+                FROM
+                    order_tracking
+                GROUP BY
+                    order_id
+            ) latest
+        ON
+            ot.order_id = latest.order_id AND ot.status_date = latest.max_status_date
+        ) t
+        ON
+            o.order_id = t.order_id
         GROUP BY
             o.order_id,
             t.status,
@@ -64,9 +73,9 @@ $sql = "
             o.order_status,
             o.order_date,
             o.updated_at
-
-        ORDER BY o.order_date DESC;
-        ";
+        ORDER BY
+            o.order_id
+        DESC;";
 
 try {
     $stmt = $pdo->query($sql);

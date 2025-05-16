@@ -230,6 +230,7 @@
                                     delivery_address: item.delivery_address,
                                     total_amount: item.total_amount,
                                     current_status: item.current_status,
+                                    refference_num: item.refference_num,
                                     tracking_status: item.tracking_status || '-',
                                     status_comments: item.status_comments || '-',
                                     order_date: item.order_date,
@@ -280,15 +281,15 @@
                                       onmouseout="this.style.cursor='default';">`
                             ).join('');
 
-                            const isCancelled = order.current_status === 'Cancelled';
+                            const isCancelledOrDelivered = order.current_status === 'Cancelled' || order.current_status === 'Delivered' || order.current_status === 'Picked Up';
 
                             const actionButtons = order.tracking_status === 'Pending'
                                 ? `
-                                    <button class="btn btn-primary btn-sm" onclick="handleApprove('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Approve</button>
-                                    <button class="btn btn-danger btn-sm" onclick="handleDecline('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Decline</button>
+                                    <button class="btn btn-primary btn-sm" onclick="handleApprove('${order.order_id}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Approve</button>
+                                    <button class="btn btn-danger btn-sm" onclick="handleDecline('${order.order_id}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Decline</button>
                                   `
                                 : `
-                                    <button class="btn btn-warning btn-sm" onclick="handleUpdateStatus('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Update Status</button>
+                                    <button class="btn btn-primary btn-sm" onclick="handleUpdateStatus('${order.order_id}', '${order.payment_method}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Update Status</button>
                                   `;
 
 
@@ -298,7 +299,9 @@
                                 <td>${order.order_id}</td>
                                 <td>${order.first_name} ${order.last_name}</td>
                                 <td>${order.payment_method}</td>
-                                <td>${order.delivery_address}</td>
+                                <td>
+                                  ${order.delivery_address} ${order.refference_num ? `<a href="javascript:void(0);" onclick="showGcashPaymentDetails('${order.refference_num}')">- Paid via Gcash</a>` : ''}
+                                </td>
                                 <td>${order.total_amount}</td>
                                 <td>${order.current_status}</td>
                                 <td>${order.status_comments}</td>
@@ -326,6 +329,76 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
             });
         });
+
+        function handleUpdateStatus(orderId, payment_method) {
+          let optionsHTML = '';
+          if (payment_method === 'Pickup') {
+            optionsHTML = `
+              <label for="statusSelect">Select Status:</label>
+              <select id="statusSelect" class="swal2-select" style="width: 60%;">
+                <option value="Ready for Pickup">Ready for Pickup</option>
+                <option value="Picked Up">Picked Up</option>
+              </select>
+            `;
+          } else if (payment_method === 'COD') {
+            optionsHTML = `
+              <label for="statusSelect">Select Status:</label>
+              <select id="statusSelect" class="swal2-select" style="width: 60%;">
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            `;
+          } else {
+            optionsHTML = `
+              <label for="statusSelect">Enter Status:</label>
+              <input type="text" id="statusSelect" class="swal2-input" placeholder="Enter status" />
+            `;
+          }
+
+          Swal.fire({
+            title: 'Update Order Status',
+            html: `
+              <p>Are you sure you want to update the status for order: ${orderId}?</p>
+              ${optionsHTML}
+            `,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            cancelButtonText: 'Cancel',
+            didOpen: () => {
+              const selectElement = Swal.getPopup().querySelector('#statusSelect');
+              if (selectElement) {
+                selectElement.focus();
+              }
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const selectedStatus = Swal.getPopup().querySelector('#statusSelect').value;
+
+              // Using POST method for better security and convention
+                fetch('mysql/update_order_status.php', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  body: `id=${encodeURIComponent(orderId)}&status=${encodeURIComponent(selectedStatus)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    fetchOrders();
+                    Swal.fire('Updated!', data.message, 'success');
+                  } else {
+                    Swal.fire('Error', data.message, 'error');
+                  }
+                })
+                .catch(error => {
+                  Swal.fire('Error', 'An error occurred while updating the status.', 'error');
+                  console.error('Error:', error);
+                });
+            }
+          });
+        }
 
         function viewImage(imagePath, quantity) {
             const modalImage = document.getElementById('modalImage');
@@ -400,5 +473,59 @@
             });
         }
     </script>
+
+    <script>
+        function showGcashPaymentDetails(orderId) {
+          Swal.fire({
+            title: 'Gcash Payment Details',
+            text: 'Gcash Ref No.: ' + orderId,
+            icon: 'info',
+            confirmButtonText: 'OK'
+          });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const table = document.getElementById('productTable');
+          const headers = table.querySelectorAll('th');
+
+          let sortDirection = {}; // Keep track of sort direction per column
+
+          headers.forEach((header, index) => {
+            header.style.cursor = 'pointer'; // Indicate clickable
+
+            header.addEventListener('click', () => {
+              const rows = Array.from(table.tBodies[0].rows);
+
+              // Determine sort direction: toggle between asc and desc
+              const dir = sortDirection[index] === 'asc' ? 'desc' : 'asc';
+              sortDirection = {}; // Reset all directions
+              sortDirection[index] = dir;
+
+              rows.sort((a, b) => {
+                const cellA = a.cells[index].innerText.trim();
+                const cellB = b.cells[index].innerText.trim();
+
+                // Handle numeric sorting if possible
+                const numA = parseFloat(cellA.replace(/[^0-9.-]/g, ''));
+                const numB = parseFloat(cellB.replace(/[^0-9.-]/g, ''));
+
+                if (!isNaN(numA) && !isNaN(numB)) {
+                  return dir === 'asc' ? numA - numB : numB - numA;
+                }
+
+                // Otherwise, compare as strings (case-insensitive)
+                return dir === 'asc'
+                  ? cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' })
+                  : cellB.localeCompare(cellA, undefined, { numeric: true, sensitivity: 'base' });
+              });
+
+              // Append sorted rows to the tbody
+              rows.forEach(row => table.tBodies[0].appendChild(row));
+            });
+          });
+        });
+        </script>
   </body>
 </html>
