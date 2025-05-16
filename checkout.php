@@ -116,7 +116,7 @@ if (!isset($_COOKIE['DWHMA0'])) {
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span>Shipping:</span>
-                <span id="shippinf-fee">₱0.00</span>
+                <span id="shipping-fee">₱0.00</span>
               </div>
               <hr>
               <div class="d-flex justify-content-between fw-bold mb-3">
@@ -312,16 +312,31 @@ if (!isset($_COOKIE['DWHMA0'])) {
     const pickupRadio = document.getElementById('pickupOption');
     const codRadio = document.getElementById('codOption');
     const addressContainer = document.getElementById('addressContainer');
+    const shippingFeeSpan = document.getElementById('shipping-fee');
 
-    pickupRadio.addEventListener('change', toggleAddressInput);
-    codRadio.addEventListener('change', toggleAddressInput);
+    pickupRadio.addEventListener('change', toggleAddressAndFee);
+    codRadio.addEventListener('change', toggleAddressAndFee);
 
-    function toggleAddressInput() {
+    const originalSubtotal = subtotal;
+    const summaryTotalElement = document.getElementById('summary-total');
+
+    function toggleAddressAndFee() {
+      let totalAmount = originalSubtotal;
+
       if (document.getElementById('codOption').checked) {
         addressContainer.style.display = 'block';
+        // Set shipping fee to ₱100.00
+        shippingFeeSpan.textContent = '₱100.00';
+        // Add 100 to subtotal for total
+        totalAmount += 100;
       } else {
         addressContainer.style.display = 'none';
+        // Reset shipping fee
+        shippingFeeSpan.textContent = '₱0.00';
       }
+
+      // Update the summary total display
+      document.getElementById('summary-total').textContent = `₱${totalAmount.toFixed(2)}`;
     }
 
     // Function to get user ID from cookie
@@ -353,7 +368,7 @@ if (!isset($_COOKIE['DWHMA0'])) {
       const address = document.getElementById('deliveryAddress').value.trim();
       const userId = getUserIdFromCookie();
 
-      // Validate user is logged in with valid ID
+      // Validate user login
       if (!userId) {
         Swal.fire({
           icon: 'error',
@@ -364,7 +379,7 @@ if (!isset($_COOKIE['DWHMA0'])) {
         return;
       }
 
-      // Validate form
+      // Validate address if COD
       if (selectedMethod === 'COD' && !address) {
         Swal.fire({
           icon: 'error',
@@ -374,9 +389,8 @@ if (!isset($_COOKIE['DWHMA0'])) {
         return;
       }
 
-      // Get cart items
+      // Get cart
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
       if (cart.length === 0) {
         Swal.fire({
           icon: 'error',
@@ -386,71 +400,125 @@ if (!isset($_COOKIE['DWHMA0'])) {
         return;
       }
 
-      // Prepare order data
-      const orderData = {
-        user_id: userId,
-        payment_method: selectedMethod,
-        delivery_address: selectedMethod === 'COD' ? address : 'Pickup',
-        total_amount: subtotal,
-        items: cart
-      };
+      // Calculate total amount considering COD or Pickup
+      const totalAmount = selectedMethod === 'COD' ? subtotal + 100 : subtotal;
 
-      console.log(orderData);
+      // Variable to hold reference number if provided
+      let referenceNumber = null;
 
-      // Show confirmation
-      Swal.fire({
-        title: 'Confirm Order',
-        text: `Total: ₱${subtotal.toFixed(2)}\nPayment: ${selectedMethod}`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#4CAF50',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Place Order'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Submit the order data to the server
-          fetch('homepage/mysql/place_order.php', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderData)
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              // Order successfully placed
-              Swal.fire({
-                title: 'Order Placed!',
-                text: `Order #${data.order_id} has been successfully placed.`,
-                icon: 'success',
-                timer: 3000,
-                showConfirmButton: false
-              }).then(() => {
-                // Clear the cart
-                localStorage.removeItem('cart');
-                // Redirect to order confirmation page
-                window.location.href = `order-confirmation.php?order_id=${data.order_id}`;
-              });
-            } else {
-              // Order placement failed
+      // Function to proceed with order submission
+      function submitOrder() {
+        const orderData = {
+          user_id: userId,
+          payment_method: selectedMethod,
+          delivery_address: selectedMethod === 'COD' ? address : 'Pickup',
+          total_amount: totalAmount,
+          items: cart,
+          reference_number: referenceNumber // include reference number if available
+        };
+
+        console.log(orderData);
+
+        // Show confirmation before submitting
+        Swal.fire({
+          title: 'Confirm Order',
+          text: `Total: ₱${totalAmount.toFixed(2)}\nPayment: ${selectedMethod}`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#4CAF50',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Place Order'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Send order to server
+            fetch('homepage/mysql/place_order.php', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Swal.fire({
+                  title: 'Order Placed!',
+                  text: `Order #${data.order_id} has been successfully placed.`,
+                  icon: 'success',
+                  timer: 3000,
+                  showConfirmButton: false
+                }).then(() => {
+                  localStorage.removeItem('cart');
+                  window.location.href = `account.php`;
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Order Failed',
+                  text: data.message || 'There was an error processing your order.'
+                });
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
               Swal.fire({
                 icon: 'error',
-                title: 'Order Failed',
-                text: data.message || 'There was an error processing your order.'
+                title: 'Server Error',
+                text: 'There was a problem connecting to the server. Please try again.'
               });
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Server Error',
-              text: 'There was a problem connecting to the server. Please try again.'
             });
-          });
-        }
-      });
+          }
+        });
+      }
+
+      if (selectedMethod === 'Pickup') {
+        // Ask user if they want to pay now or later
+        Swal.fire({
+          title: 'Choose Payment Option',
+          text: 'Would you like to pay now or pay later?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Pay Now',
+          cancelButtonText: 'Pay Later'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Show a custom SweetAlert with image and number input
+            Swal.fire({
+              title: 'Complete Payment',
+              html:
+                `<img src="assets/img/gcash.jpg" alt="Payment" style="width:280px; display:block; margin: 10px auto;">
+                 <p>Please enter the Ref No. after paying.:</p>
+                 <input type="text" id="refferenceNum" class="swal2-input" placeholder="Enter refference number">`,
+              focusConfirm: false,
+              showCancelButton: true,
+              confirmButtonText: 'Submit Payment',
+              preConfirm: () => {
+                const refferenceNum = document.getElementById('refferenceNum').value;
+                if (!refferenceNum || refferenceNum.length <= 12) {
+                  Swal.showValidationMessage('Please enter a valid refference number.');
+                  return false;
+                }
+                return refferenceNum;
+              }
+            }).then((paymentResult) => {
+              if (paymentResult.isConfirmed) {
+                referenceNumber = paymentResult.value; // Capture reference number
+                // Proceed with order submission including reference number if required
+                submitOrder();
+              }
+            });
+          } else {
+            // User chose to pay later
+            // Proceed with order submission without reference number
+            submitOrder();
+          }
+        });
+      } else if (selectedMethod === 'COD') {
+        // For COD, proceed to submit directly
+        // But check if user wants to pay now with reference number
+        // If needed, you can implement similar prompt here
+        submitOrder();
+      }
     });
 
     // Load order items when the page loads

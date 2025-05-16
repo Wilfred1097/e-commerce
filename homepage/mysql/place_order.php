@@ -42,20 +42,22 @@ try {
     $userId = filter_var($input['user_id'], FILTER_SANITIZE_NUMBER_INT);
     $paymentMethod = filter_var($input['payment_method'], FILTER_SANITIZE_STRING);
     $deliveryAddress = filter_var($input['delivery_address'], FILTER_SANITIZE_STRING);
+    $refference_num = filter_var($input['reference_number'], FILTER_SANITIZE_STRING);
     $totalAmount = filter_var($input['total_amount'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
     // Start transaction
     $pdo->beginTransaction();
 
     // 1. Insert order into orders table
-    $sql = "INSERT INTO orders (user_id, payment_method, delivery_address, total_amount, order_status, order_date)
-            VALUES (:user_id, :payment_method, :delivery_address, :total_amount, 'Pending', NOW())";
+    $sql = "INSERT INTO orders (user_id, payment_method, delivery_address, refference_num, total_amount, order_status, order_date)
+            VALUES (:user_id, :payment_method, :delivery_address, :refference_num, :total_amount, 'Pending', NOW())";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':user_id' => $userId,
         ':payment_method' => $paymentMethod,
         ':delivery_address' => $deliveryAddress,
+        ':refference_num' => $refference_num,
         ':total_amount' => $totalAmount
     ]);
 

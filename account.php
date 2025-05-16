@@ -104,8 +104,26 @@ if (!isset($_COOKIE['DWHMA0'])) {
     <div class="container text-center">
       <h2 class="mb-4">Customer Account Page</h2>
 
-      <!-- Cart Items -->
-
+      <!-- Order Tracking Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Payment Method</th>
+                    <th>Delivery Address</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Products</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody id="customerOrderTableBody">
+                <!-- Fetched data will go here -->
+            </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -204,6 +222,58 @@ if (!isset($_COOKIE['DWHMA0'])) {
       }
 
       window.addEventListener('DOMContentLoaded', updateCartBadge);
+  </script>
+
+  <script>
+    function formatDate(datetime) {
+        const d = new Date(datetime);
+        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+    }
+    function fetchCustomerOrders() {
+        fetch('homepage/mysql/get_customer_orders.php')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('customerOrderTableBody');
+                tableBody.innerHTML = '';
+
+                if (data.success && data.orders.length > 0) {
+                    data.orders.forEach(order => {
+                        const productList = order.products.map(product => `
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="main/template/mysql/${product.product_image}" alt="Product" style="width: 40px; height: 40px; object-fit: cover; margin-right: 8px;">
+                                <span>x${product.quantity}</span>
+                            </div>
+                        `).join('');
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${order.order_id}</td>
+                            <td>${formatDate(order.order_date)}</td>
+                            <td>
+                              ${order.payment_method}${order.refference_num ? ' / Paid via Gcash' : ''}
+                            </td>
+                            <td>${order.delivery_address}</td>
+                            <td>₱${parseFloat(order.total_amount).toFixed(2)}</td>
+                            <td>${order.tracking_status}</td>
+                            <td>
+                                ${productList}
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="8">No orders found.</td></tr>`;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('customerOrderTableBody').innerHTML = `<tr><td colspan="8">Error loading orders.</td></tr>`;
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchCustomerOrders);
+
+
   </script>
 
 </body>

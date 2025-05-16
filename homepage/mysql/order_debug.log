@@ -8,3 +8,53 @@
 [2025-05-16 13:45:54] Inserted order item 
 [2025-05-16 13:45:54] Added tracking record 
 [2025-05-16 13:45:54] Transaction committed successfully 
+[2025-05-16 18:01:37] Received order data: {"user_id":18,"payment_method":"COD","delivery_address":"Mahayag","total_amount":1000,"items":[{"productId":2,"availableQty":19,"quantity":1}]}
+[2025-05-16 18:01:37] Created order with ID: 11 
+[2025-05-16 18:01:37] Processing item: {"productId":2,"availableQty":19,"quantity":1}
+[2025-05-16 18:01:37] Looking up product ID: 2, Quantity: 1 
+[2025-05-16 18:01:37] Product data retrieved: {"id":2,"description":"Beautifully handcrafted from premium abaca fibers, this eco-friendly bag showcases a perfect blend of durability and elegance. The intricate weaving highlights the artistry of skilled artisans, making each piece unique. With its natural texture and earthy tones, this abaca bag is not just a functional accessory but also a stylish statement. Ideal for casual outings or as a sustainable fashion choice, it\u2019s lightweight, sturdy, and designed to last. Truly, a masterpiece of nature and craftsmanship combined.","price":"900.00","qty":"19"}
+[2025-05-16 18:01:37] Available quantity: 19, Requested: 1 
+[2025-05-16 18:01:37] Price: 900, Subtotal: 900 
+[2025-05-16 18:01:37] Inserted order item 
+[2025-05-16 18:01:37] Added tracking record 
+[2025-05-16 18:01:37] Transaction committed successfully 
+[2025-05-16 18:22:01] Received order data: {"user_id":18,"payment_method":"Pickup","delivery_address":"Pickup","total_amount":150,"items":[{"productId":10,"availableQty":24,"quantity":2}],"reference_number":"1234567890123"}
+[2025-05-16 18:22:01] Created order with ID: 12 
+[2025-05-16 18:22:01] Processing item: {"productId":10,"availableQty":24,"quantity":2}
+[2025-05-16 18:22:01] Looking up product ID: 10, Quantity: 2 
+[2025-05-16 18:22:01] Product data retrieved: {"id":10,"description":"Stay stylish and eco-friendly with this handmade medium abaca scrunch bag! Perfectly sized for your essentials, it\u2019s durable, lightweight, and a chic addition to any outfit.","price":"75.00","qty":"24"}
+[2025-05-16 18:22:01] Available quantity: 24, Requested: 2 
+[2025-05-16 18:22:01] Price: 75, Subtotal: 150 
+[2025-05-16 18:22:01] Inserted order item 
+[2025-05-16 18:22:01] Added tracking record 
+[2025-05-16 18:22:01] Transaction committed successfully 
+[2025-05-16 18:25:37] Received order data: {"user_id":18,"payment_method":"Pickup","delivery_address":"Pickup","total_amount":150,"items":[{"productId":10,"availableQty":24,"quantity":2}],"reference_number":"1234567890123"}
+[2025-05-16 18:25:37] Created order with ID: 13 
+[2025-05-16 18:25:37] Processing item: {"productId":10,"availableQty":24,"quantity":2}
+[2025-05-16 18:25:37] Looking up product ID: 10, Quantity: 2 
+[2025-05-16 18:25:37] Product data retrieved: {"id":10,"description":"Stay stylish and eco-friendly with this handmade medium abaca scrunch bag! Perfectly sized for your essentials, it\u2019s durable, lightweight, and a chic addition to any outfit.","price":"75.00","qty":"24"}
+[2025-05-16 18:25:37] Available quantity: 24, Requested: 2 
+[2025-05-16 18:25:37] Price: 75, Subtotal: 150 
+[2025-05-16 18:25:37] Inserted order item 
+[2025-05-16 18:25:37] Added tracking record 
+[2025-05-16 18:25:37] Transaction committed successfully 
+[2025-05-16 18:27:39] Received order data: {"user_id":18,"payment_method":"Pickup","delivery_address":"Pickup","total_amount":100,"items":[{"productId":3,"availableQty":115,"quantity":2}],"reference_number":null}
+[2025-05-16 18:27:39] Created order with ID: 14 
+[2025-05-16 18:27:39] Processing item: {"productId":3,"availableQty":115,"quantity":2}
+[2025-05-16 18:27:39] Looking up product ID: 3, Quantity: 2 
+[2025-05-16 18:27:39] Product data retrieved: {"id":3,"description":"Keep your essentials organized with this handmade abaca pencil case. Durable, eco-friendly, and uniquely stylish\u2014perfect for school, work.","price":"50.00","qty":"115"}
+[2025-05-16 18:27:39] Available quantity: 115, Requested: 2 
+[2025-05-16 18:27:39] Price: 50, Subtotal: 100 
+[2025-05-16 18:27:39] Inserted order item 
+[2025-05-16 18:27:39] Added tracking record 
+[2025-05-16 18:27:39] Transaction committed successfully 
+[2025-05-16 18:40:08] Received order data: {"user_id":18,"payment_method":"Pickup","delivery_address":"Pickup","total_amount":150,"items":[{"productId":3,"availableQty":115,"quantity":3}],"reference_number":"1234567890123"}
+[2025-05-16 18:40:08] Created order with ID: 15 
+[2025-05-16 18:40:08] Processing item: {"productId":3,"availableQty":115,"quantity":3}
+[2025-05-16 18:40:08] Looking up product ID: 3, Quantity: 3 
+[2025-05-16 18:40:08] Product data retrieved: {"id":3,"description":"Keep your essentials organized with this handmade abaca pencil case. Durable, eco-friendly, and uniquely stylish\u2014perfect for school, work.","price":"50.00","qty":"115"}
+[2025-05-16 18:40:08] Available quantity: 115, Requested: 3 
+[2025-05-16 18:40:08] Price: 50, Subtotal: 150 
+[2025-05-16 18:40:08] Inserted order item 
+[2025-05-16 18:40:08] Added tracking record 
+[2025-05-16 18:40:08] Transaction committed successfully 
