@@ -120,13 +120,13 @@ try {
         logDebug("Inserted order item");
 
         // Update inventory
-        $updateSql = "UPDATE products SET qty = qty - :quantity WHERE id = :product_id";
-        $updateStmt = $pdo->prepare($updateSql);
-        $updateStmt->execute([
-            ':quantity' => $quantity,
-            ':product_id' => $productId
-        ]);
-        logDebug("Updated inventory for product ID: $productId");
+        // $updateSql = "UPDATE products SET qty = qty - :quantity WHERE id = :product_id";
+        // $updateStmt = $pdo->prepare($updateSql);
+        // $updateStmt->execute([
+        //     ':quantity' => $quantity,
+        //     ':product_id' => $productId
+        // ]);
+        // logDebug("Updated inventory for product ID: $productId");
     }
 
     // 3. Add initial tracking record

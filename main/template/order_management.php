@@ -115,10 +115,8 @@
                                               <th>Payment</th>
                                               <th>Delivery Address</th>
                                               <th>Total Amount</th>
-                                              <th>Order Status</th>
                                               <th>Tracking Status</th>
-                                              <th>Tracking Comments</th>
-                                              <th>Total Ordered Items</th>
+                                              <th>Order Status</th>
                                               <th>Product</th>
                                               <th>Order Date</th>
                                               <th>Actions</th>
@@ -139,7 +137,7 @@
 
         <!-- VIEW IMAGE MODAL -->
         <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="viewImageModalLabel">Product Image</h5>
@@ -216,6 +214,8 @@
                         const orderTableBody = document.getElementById('orderTableBody');
                         orderTableBody.innerHTML = '';
 
+                        console.log(orders);
+
                         groupedOrders = {}; // Reset
 
                         orders.forEach(item => {
@@ -235,7 +235,7 @@
                                     order_date: item.order_date,
                                     total_items: parseInt(item.total_items) || 0,
                                     total_quantity: parseInt(item.quantity) || 0,
-                                    images: [], // Store images here
+                                    products: [], // Store images here
                                 };
                             } else {
                                 // Aggregate total_items and quantities for grouped orders if needed
@@ -246,26 +246,52 @@
                             // Parse products JSON to get images
                             if (item.products) {
                                 try {
-                                    // Some APIs may return an array, others a JSON string of array - parse safely
-                                    const productsArray = JSON.parse(`[${item.products}]`); // wrap in [ ] to parse multiple JSON objects separated by commas
+                                    const productsArray = JSON.parse(`[${item.products}]`);
 
                                     productsArray.forEach(prod => {
-                                        if (prod.image && !groupedOrders[orderId].images.includes(prod.image)) {
-                                            groupedOrders[orderId].images.push(prod.image);
+                                        if (prod.image) {
+                                            const exists = groupedOrders[orderId].products.find(p => p.image === prod.image);
+                                            if (!exists) {
+                                                groupedOrders[orderId].products.push({
+                                                    image: prod.image,
+                                                    quantity: parseInt(prod.quantity) || 1,
+                                                    name: prod.name || '' // optional
+                                                });
+                                            }
                                         }
                                     });
                                 } catch (e) {
                                     console.warn('Failed to parse products JSON:', e);
                                 }
                             }
+
                         });
 
                         // Render table rows with images after order_date
                         Object.values(groupedOrders).forEach(order => {
                             // Create image thumbnails HTML string
-                            const imagesHtml = order.images.map(imgPath =>
-                                `<img src="mysql/${imgPath}" alt="Product Image" style="width:40px; height:40px; object-fit:cover; margin-right:5px; border-radius:4px;" onclick="viewImage('${imgPath}')" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';">`
+                            const imagesHtml = order.products.map(prod =>
+                                `<img src="mysql/${prod.image}"
+                                      alt="Product Image"
+                                      style="width:40px; height:40px; object-fit:cover; margin-right:5px; border-radius:4px;"
+                                      onclick="viewImage('${prod.image}', ${prod.quantity})"
+                                      title="Qty: ${prod.quantity}"
+                                      onmouseover="this.style.cursor='pointer';"
+                                      onmouseout="this.style.cursor='default';">`
                             ).join('');
+
+                            const isCancelled = order.current_status === 'Cancelled';
+
+                            const actionButtons = order.tracking_status === 'Pending'
+                                ? `
+                                    <button class="btn btn-primary btn-sm" onclick="handleApprove('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Approve</button>
+                                    <button class="btn btn-danger btn-sm" onclick="handleDecline('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Decline</button>
+                                  `
+                                : `
+                                    <button class="btn btn-warning btn-sm" onclick="handleUpdateStatus('${order.order_id}')" ${isCancelled ? 'disabled' : ''}>Update Status</button>
+                                  `;
+
+
 
                             const row = document.createElement('tr');
                             row.innerHTML = `
@@ -275,19 +301,10 @@
                                 <td>${order.delivery_address}</td>
                                 <td>${order.total_amount}</td>
                                 <td>${order.current_status}</td>
-                                <td>${order.tracking_status}</td>
                                 <td>${order.status_comments}</td>
-                                <td>${order.total_items} ${order.total_items === 1 ? 'pc' : 'pcs'}</td>
                                 <td>${imagesHtml}</td>
                                 <td>${formatDate(order.order_date)}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">
-                                        Approve
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        Decline
-                                    </button>
-                                </td>
+                                <td>${actionButtons}</td>
                             `;
                             orderTableBody.appendChild(row);
                         });
@@ -310,16 +327,77 @@
             });
         });
 
-         function viewImage(imagePath) {
-            // Get references to the modal elements
+        function viewImage(imagePath, quantity) {
             const modalImage = document.getElementById('modalImage');
+            const modalLabel = document.getElementById('viewImageModalLabel');
 
-            // Set the modal image source and title
             modalImage.src = `mysql/${imagePath}`;
+            modalLabel.textContent = `Quantity: ${quantity}`;
 
-            // Show the modal
             const viewImageModal = new bootstrap.Modal(document.getElementById('viewImageModal'));
             viewImageModal.show();
+        }
+
+        function handleApprove(orderId) {
+            Swal.fire({
+                title: 'Approve Order?',
+                text: `Are you sure you want to approve order #${orderId}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Call the PHP backend
+                    fetch(`mysql/approve_order.php?id=${orderId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Approved!', `Order #${orderId} has been approved.`, 'success');
+                                fetchOrders(); // Reload the table to reflect status change
+                            } else {
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+                        });
+                }
+            });
+        }
+
+        function handleDecline(orderId) {
+            Swal.fire({
+                title: 'Decline Order?',
+                text: `Are you sure you want to decline order #${orderId}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Decline',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#aaa'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Call the PHP backend
+                    fetch(`mysql/decline_order.php?id=${orderId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Decline!', `Order #${orderId} has been decline.`, 'success');
+                                fetchOrders(); // Reload the table to reflect status change
+                            } else {
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+                        });
+                }
+            });
         }
     </script>
   </body>
