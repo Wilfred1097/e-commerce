@@ -8,10 +8,10 @@
     <meta name="description" content="Admiro admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities."/>
     <meta name="keywords" content="admin template, Admiro admin template, best javascript admin, dashboard template, bootstrap admin template, responsive admin template, web app"/>
     <meta name="author" content="pixelstrap"/>
-    <title>Admiro - Premium Admin Template</title>
+    <title>Handicrafts - Chat</title>
     <!-- Favicon icon-->
-    <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon"/>
-    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon"/>
+
+
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
@@ -34,6 +34,95 @@
     <!-- App css -->
     <link rel="stylesheet" href="../assets/css/style.css"/>
     <link id="color" rel="stylesheet" href="../assets/css/color-1.css" media="screen"/>
+    <style>
+  /* Reset existing message styles */
+  .msger-chat {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 250px);
+  }
+
+  .msg {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  /* Left message - Absolutely positioned to the left */
+  .left-msg {
+    align-self: flex-start;
+    max-width: 70%;
+    margin-right: auto;
+    position: relative;
+  }
+
+  /* Right message - Absolutely positioned to the right */
+  .right-msg {
+    align-self: flex-end;
+    max-width: 70%;
+    margin-left: auto;
+    position: relative;
+    flex-direction: row-reverse;
+  }
+
+  .msg-img {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .left-msg .msg-img {
+    background-image: url("../assets/images/blog/comment.jpg");
+  }
+
+  .right-msg .msg-img {
+    background-image: url("../assets/images/avtar/3.jpg");
+  }
+
+  .msg-bubble {
+    padding: 12px;
+    border-radius: 15px;
+  }
+
+  .left-msg .msg-bubble {
+    background: #f1f1f1;
+    border-bottom-left-radius: 0;
+    color: #333;
+  }
+
+  .right-msg .msg-bubble {
+    background: #4CAF50;
+    color: white;
+    border-bottom-right-radius: 0;
+  }
+
+  .msg-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .msg-info-name {
+    font-weight: bold;
+    font-size: 0.85em;
+  }
+
+  .msg-info-time {
+    font-size: 0.75em;
+    opacity: 0.7;
+  }
+
+  .msg-text {
+    word-break: break-word;
+  }
+</style>
   </head>
   <body>
     <!-- page-wrapper Start-->
@@ -81,342 +170,11 @@
                     </div>
                   </div>
                   <div class="advance-options"> 
-                    <ul class="nav border-tab" id="chat-options-tab" role="tablist">
-                      <li class="nav-item"><a class="nav-link active" id="chats-tab" data-bs-toggle="tab" href="#chats" role="tab" aria-controls="chats" aria-selected="true">Chats</a></li>
-                      <li class="nav-item"><a class="nav-link" id="contacts-tab" data-bs-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a></li>
-                    </ul>
-                    <div class="tab-content" id="chat-options-tabContent"> 
+                    <div class="tab-content" id="chat-options-tabContent">
                       <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
-                        <div class="common-space"> 
-                          <p>Recent chats</p>
-                          <div class="header-top"><a class="btn badge-light-primary f-w-500" href="#!"><i class="fa-solid fa-plus"></i></a></div>
-                        </div>
                         <ul class="chats-user">
-                          <li class="common-space"> 
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/avtar/3.jpg" alt="user"/>
-                                <div class="status bg-success"></div>
-                              </div>
-                              <div> <span>Cameron Williamson</span>
-                                <p>Hey, How are you?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>2 min </p>
-                              <div class="badge badge-light-success">15</div>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/avtar/11.jpg" alt="user"/>
-                                <div class="status bg-success"></div>
-                              </div>
-                              <div> <span>Esther Howard</span>
-                                <p>Thanks for reply</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>7:30 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/avtar/7.jpg" alt="user"/>
-                                <div class="status bg-success"></div>
-                              </div>
-                              <div> <span>Ankita Chovatiya</span>
-                                <p>Hey, What's up?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>1:10 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/avtar/16.jpg" alt="user"/>
-                                <div class="status bg-success"></div>
-                              </div>
-                              <div> <span>Ronald Richards</span>
-                                <p>I'm ready</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>13:10 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/avtar/4.jpg" alt="user"/>
-                                <div class="status bg-warning"></div>
-                              </div>
-                              <div> <span>Darlene Robertson</span>
-                                <p>Hey, How are you?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>1:30 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/blog/comment.jpg" alt="user"/>
-                                <div class="status bg-warning"></div>
-                              </div>
-                              <div> <span>Darrell Steward</span>
-                                <p>What's going on?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>2:10 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/blog/4.jpg" alt="user"/>
-                                <div class="status bg-success"></div>
-                              </div>
-                              <div> <span>Theresa Webb</span>
-                                <p>What's up?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>1:50 AM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/blog/12.png" alt="user"/>
-                                <div class="status bg-warning"></div>
-                              </div>
-                              <div> <span>Floyd Miles</span>
-                                <p>Are you sure?</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>5:14 PM</p>
-                            </div>
-                          </li>
-                          <li class="common-space">
-                            <div class="chat-time">
-                              <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/blog/9.jpg" alt="user"/>
-                                <div class="status bg-warning"></div>
-                              </div>
-                              <div> <span>Annette Black</span>
-                                <p>Thanks</p>
-                              </div>
-                            </div>
-                            <div>
-                              <p>1:50 PM</p>
-                            </div>
-                          </li>
+                          <!-- Message Sender Here -->
                         </ul>
-                      </div>
-                      <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                        <div class="common-space"> 
-                          <p>Contacts</p>
-                          <div class="header-top"><a class="btn badge-light-primary f-w-500" href="#!"><i class="fa-solid fa-plus"></i></a></div>
-                        </div>
-                        <div class="search-contacts">
-                          <input class="form-control" type="text" placeholder="Name and phone number"/>
-                          <svg> 
-                            <use href="../assets/svg/icon-sprite.svg#stroke-search"></use>
-                          </svg><i class="mic-search" data-feather="mic"></i>
-                        </div>
-                        <div class="contact-wrapper">
-                          <p>A </p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/avtar/3.jpg" alt="user"/>
-                                <div> <span>Andres Williamson</span>
-                                  <p>191-900-5689</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>B</p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/blog/comment.jpg" alt="user"/>
-                                <div> <span>Britlin Weed</span>
-                                  <p>698-781-5581</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time">
-                                <div class="custom-name bg-light-secondary">
-                                  <p class="text-secondary f-w-500">BD</p>
-                                </div>
-                                <div> <span>Brendra Dixit</span>
-                                  <p>589-789-2563</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>C </p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/blog/14.png" alt="user"/>
-                                <div> <span>Cody Fisher</span>
-                                  <p>983-333-4545</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time">
-                                <div class="position-relative custom-name bg-light-success">
-                                  <p class="text-success f-w-500">CE</p>
-                                </div>
-                                <div> <span>Clifford Evans</span>
-                                  <p>321-456-7878</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites  </a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time">
-                                <div class="custom-name bg-light-warning">
-                                  <p class="text-warning f-w-500">CW </p>
-                                </div>
-                                <div> <span>Cameron Williamson</span>
-                                  <p>369-852-7417</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>D</p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/blog/12.png" alt="user"/>
-                                <div> <span>Darlene Robertson</span>
-                                  <p>231-279-1001</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/user/3.png" alt="user"/>
-                                <div> <span>Dianne Russell</span>
-                                  <p>569-789-1002</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/user/6.jpg" alt="user"/>
-                                <div> <span>Darrell Steward</span>
-                                  <p>200-300-1030</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>E </p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/user/1.jpg" alt="user"/>
-                                <div> <span>Emily Collins</span>
-                                  <p>100-555-7032</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>F </p>
-                          <ul class="border-0">
-                            <li class="common-space">
-                              <div class="chat-time"><img class="img-fluid rounded-circle" src="../assets/images/user/2.jpg" alt="user"/>
-                                <div> <span>Fiona Cooper</span>
-                                  <p>362-778-1919</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                            <li class="common-space">
-                              <div class="chat-time">
-                                <div class="custom-name bg-light-danger">
-                                  <p class="text-danger f-w-500">FG</p>
-                                </div>
-                                <div> <span>Freya Grayson</span>
-                                  <p>589-789-2563</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites</a></div>
-                              </div>
-                            </li>
-                          </ul>
-                          <p>G</p>
-                          <ul class="border-0"> 
-                            <li class="common-space">
-                              <div class="chat-time">
-                                <div class="custom-name bg-light-warning">
-                                  <p class="text-warning f-w-500">GE</p>
-                                </div>
-                                <div> <span>Gabriel Evans</span>
-                                  <p>963-147-5024</p>
-                                </div>
-                              </div>
-                              <div class="contact-edit"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                                     Send messages</a><a class="dropdown-item" href="#!">
-                                     Add to favorites   </a></div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -428,18 +186,8 @@
                     <div class="common-space"> 
                       <div class="chat-time"> 
                         <div class="active-profile"><img class="img-fluid rounded-circle" src="../assets/images/blog/comment.jpg" alt="user"/>
-                          <div class="status bg-success"></div>
                         </div>
-                        <div> <span>Darrell Steward</span>
-                          <p>Online </p>
-                        </div>
-                      </div>
-                      <div class="d-flex gap-2">
-                        <div class="contact-edit chat-alert"><i class="icon-info-alt"></i></div>
-                        <div class="contact-edit chat-alert"><i class="dropdown-toggle" data-feather="more-vertical" role="menu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                          <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">View details</a><a class="dropdown-item" href="#!">
-                               Send messages</a><a class="dropdown-item" href="#!">
-                               Add to favorites</a></div>
+                        <div> <span></span>
                         </div>
                       </div>
                     </div>
@@ -447,93 +195,24 @@
                   <div class="right-sidebar-Chats"> 
                     <div class="msger">
                       <div class="msger-chat">
-                        <div class="msg left-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Theresa Webb</div>
-                              <div class="msg-info-time">01:14 PM</div>
-                            </div>
-                            <div class="msg-text">Hey, I'm looking to redesign my website. Can you help me? &#x1F604;</div>
-                          </div>
-                        </div>
-                        <div class="msg right-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Darrell Steward</div>
-                              <div class="msg-info-time">12:14 PM</div>
-                            </div>
-                            <div class="msg-text"> Absolutely! I'd be happy to assist you.</div>
-                          </div>
-                        </div>
-                        <div class="msg right-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Darrell Steward</div>
-                              <div class="msg-info-time">12:14 PM</div>
-                            </div>
-                            <div class="msg-text">What kind of design aesthetic are you aiming for?</div>
-                          </div>
-                        </div>
-                        <div class="msg left-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Theresa Webb</div>
-                              <div class="msg-info-time">01:14 PM</div>
-                            </div>
-                            <div class="msg-text">I want a clean and modern look with a focus on user experience.</div>
-                          </div>
-                        </div>
-                        <div class="msg right-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Darrell Steward</div>
-                              <div class="msg-info-time">12:14 PM</div>
-                            </div>
-                            <div class="msg-text">Great!  Do you have any specific color schemes in mind?</div>
-                          </div>
-                        </div>
-                        <div class="msg left-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Theresa Webb</div>
-                              <div class="msg-info-time">01:14 PM</div>
-                            </div>
-                            <div class="msg-text">I'm thinking of using a combination of blues and grays.</div>
-                          </div>
-                        </div>
-                        <div class="msg right-msg">
-                          <div class="msg-img"></div>
-                          <div class="msg-bubble">
-                            <div class="msg-info">
-                              <div class="msg-info-name">Darrell Steward</div>
-                              <div class="msg-info-time">12:14 PM</div>
-                            </div>
-                            <div class="msg-text">Excellent choice! Those colors can definitely create a professional.</div>
-                          </div>
-                        </div>
+                          <!-- Message will be Here -->
                       </div>
-                      <form class="msger-inputarea">
+                      <form class="msger-inputarea" id="send-message">
                         <div class="dropdown-form dropdown-toggle" role="main" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-plus"></i>
                           <div class="chat-icon dropdown-menu dropdown-menu-start">
                             <div class="dropdown-item mb-2">
-                              <svg> 
+                              <svg>
                                 <use href="../assets/svg/icon-sprite.svg#camera"></use>
                               </svg>
                             </div>
                             <div class="dropdown-item">
-                              <svg> 
+                              <svg>
                                 <use href="../assets/svg/icon-sprite.svg#attchment"></use>
                               </svg>
                             </div>
                           </div>
                         </div>
-                        <input class="msger-input two uk-textarea" type="text" placeholder="Type Message here.."/>
+                        <input class="msger-input" type="text" placeholder="Type Message here.."/>
                         <div class="open-emoji">
                           <div class="second-btn uk-button"></div>
                         </div>
@@ -582,5 +261,227 @@
     <script src="../assets/js/emoji-js/custom-emojis.js"></script>
     <!-- custom script -->
     <script src="../assets/js/script.js"></script>
+
+    <script>
+      $(document).ready(function() {
+    // Debug check to confirm JavaScript is running
+    // console.log('Chat script loaded');
+
+    let currentSenderUsername = '';
+
+    // Function to load senders
+    function loadSenders() {
+        // console.log('Loading senders...');
+        $.ajax({
+            url: 'mysql/get_messages_sender.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // console.log('Senders loaded:', data);
+                if (data.error) {
+                    console.error('Error fetching senders:', data.error);
+                    return;
+                }
+                $('.chats-user').empty();
+
+                data.forEach(function(sender) {
+                    const listItem = `
+                        <li class="common-space" data-sender-username="${sender.sender_username}">
+                          <div class="chat-time">
+                            <div class="active-profile">
+                              <img class="img-fluid rounded-circle" src="../assets/images/avtar/3.jpg" alt="user"/>
+                            </div>
+                            <div>
+                              <span>${sender.first_name} ${sender.middle_name} ${sender.last_name}</span>
+                            </div>
+                          </div>
+                        </li>
+                    `;
+                    $('.chats-user').append(listItem);
+                });
+
+                // Attach click handler
+                $('.chats-user li').on('click', function() {
+                    const senderUsername = $(this).data('sender-username');
+                    // Update current sender for message sending
+                    currentSenderUsername = senderUsername;
+                    // console.log('Selected sender:', currentSenderUsername);
+
+                    // Update header with sender name
+                    const senderName = $(this).find('span').text();
+                    $('.right-sidebar-title .chat-time span').text(senderName);
+
+                    // Fetch messages for this sender
+                    loadMessagesForSender(senderUsername);
+
+                    // Add active class to selected sender
+                    $('.chats-user li').removeClass('active');
+                    $(this).addClass('active');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error loading senders:', error);
+            }
+        });
+    }
+
+    // Function to load messages for a specific sender - UPDATED to use is_read
+    function loadMessagesForSender(senderUsername) {
+        // console.log('Loading messages for:', senderUsername);
+        $.ajax({
+            url: 'mysql/get_messages_by_sender.php',
+            method: 'POST',
+            data: { sender_username: senderUsername },
+            dataType: 'json',
+            success: function(messages) {
+                // console.log('Messages loaded:', messages);
+                if (messages.error) {
+                    console.error('Error fetching messages:', messages.error);
+                    return;
+                }
+                // Clear current chat
+                $('.msger-chat').empty();
+
+                // Loop through messages using is_read to determine direction
+                messages.forEach(function(msg) {
+                    // Using is_read to determine message direction
+                    // is_read = 1: message on right side (sent)
+                    // is_read = 0: message on left side (received)
+                    const isSent = parseInt(msg.is_read) === 1;
+
+                    // Debug log to verify logic
+                    // console.log(`Message: "${msg.message_text.substring(0, 20)}...", is_read: ${msg.is_read}, isSent: ${isSent}`);
+
+                    const msgHTML = `
+                        <div class="msg ${isSent ? 'right-msg' : 'left-msg'}">
+                          <div class="msg-img"></div>
+                          <div class="msg-bubble">
+                            <div class="msg-info">
+                              <div class="msg-info-name">${isSent ? 'You' : (msg.first_name + ' ' + msg.last_name)}</div>
+                              <div class="msg-info-time">${formatTimestamp(msg.timestamp)}</div>
+                            </div>
+                            <!-- If msg.image_path is present, display it as an image -->
+                            ${msg.image_path ? `<img src="../../homepage/mysql/${msg.image_path}" alt="Image" class="msg-image" />` : ''}
+                            <div class="msg-text">${msg.message_text}</div>
+                          </div>
+                        </div>
+                    `;
+                    $('.msger-chat').append(msgHTML);
+                });
+
+                // Scroll to bottom of chat
+                scrollToBottom();
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error loading messages:', error);
+            }
+        });
+    }
+
+    // Format timestamp
+    function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+
+    // Scroll to bottom of chat
+    function scrollToBottom() {
+        const chatContainer = $('.msger-chat');
+        chatContainer.scrollTop(chatContainer.prop('scrollHeight'));
+    }
+
+    // Send message function - UPDATED to use is_read
+    function sendMessage() {
+        // console.log('sendMessage function called');
+        const messageInput = $('.msger-input');
+        const messageText = messageInput.val().trim();
+
+        // console.log('Message text:', messageText);
+        // console.log('Current sender:', currentSenderUsername);
+
+        if (messageText === "" || !currentSenderUsername) {
+            // console.log('Empty message or no recipient selected');
+            return;
+        }
+
+        // Display message immediately (optimistic UI) - always right side for sent messages
+        const msgHTML = `
+            <div class="msg right-msg">
+              <div class="msg-img"></div>
+              <div class="msg-bubble">
+                <div class="msg-info">
+                  <div class="msg-info-name">You</div>
+                  <div class="msg-info-time">${formatTimestamp(new Date())}</div>
+                </div>
+                <div class="msg-text">${messageText}</div>
+              </div>
+            </div>
+        `;
+        $('.msger-chat').append(msgHTML);
+        messageInput.val('');
+        scrollToBottom();
+
+        // Send message to server
+        // console.log('Sending message with is_read=1 (admin sent)');
+
+        // Send AJAX request to save the message
+        $.ajax({
+            url: 'mysql/send_message.php',
+            method: 'POST',
+            data: {
+                sender_username: currentSenderUsername, // Admin is sending the message
+                receiver_username: 'admin', // To the selected user
+                message_text: messageText,
+                is_read: 1 // Mark as sent (will display on right)
+            },
+            dataType: 'json',
+            success: function(response) {
+                // console.log('Server response:', response);
+                if (response.success) {
+                    // console.log('Message sent successfully');
+                } else {
+                    console.error('Error sending message:', response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error sending message:', error);
+            }
+        });
+    }
+
+    // Load initial senders
+    loadSenders();
+
+    // Use multiple approaches to catch the submit event
+    // 1. Form submit event
+    $('.msger-inputarea').on('submit', function(e) {
+        // console.log('Form submitted');
+        e.preventDefault();
+        sendMessage();
+    });
+
+    // 2. Button click event as backup
+    $('.msger-send-btn').on('click', function(e) {
+        // console.log('Send button clicked');
+        e.preventDefault();
+        sendMessage();
+    });
+
+    // 3. Enter key press in input
+    $('.msger-input').on('keypress', function(e) {
+        if (e.which === 13) { // Enter key
+            // console.log('Enter key pressed');
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+});
+    </script>
   </body>
 </html>

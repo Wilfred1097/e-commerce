@@ -29,6 +29,14 @@
           </a>
       </li>
 
+      <li class="sidebar-list">
+          <i class="fa-solid fa-thumbtack"></i>
+          <a class="sidebar-link" href="order_management.php">
+              <i class="fa-solid fa-calendar-days"></i> <!-- Font Awesome Icon for Calendar -->
+              <h6 class="f-w-600">Order Management</h6>
+          </a>
+      </li>
+
        <li class="sidebar-list">
           <i class="fa-solid fa-thumbtack"></i>
           <a class="sidebar-link" href="user-management.php">

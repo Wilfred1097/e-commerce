@@ -10,8 +10,8 @@
     <meta name="author" content="pixelstrap"/>
     <title>Handicrafts - Product Management</title>
     <!-- Favicon icon-->
-    <link rel="icon" href="./../../assets/img/brgylogo.png" type="image/x-icon"/>
-    <link rel="shortcut icon" href="./../../assets/img/brgylogo.png" type="image/x-icon"/>
+
+
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>

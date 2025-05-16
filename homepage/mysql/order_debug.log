@@ -1,0 +1,29 @@
+[2025-05-16 11:49:57] Received order data: {"user_id":18,"payment_method":"COD","delivery_address":"Poblacion Mahayag, Zamboanag del Sur","total_amount":360,"items":[{"productId":9,"availableQty":15,"quantity":3}]}
+[2025-05-16 11:49:57] Created order with ID: 8 
+[2025-05-16 11:49:57] Processing item: {"productId":9,"availableQty":15,"quantity":3}
+[2025-05-16 11:49:57] Looking up product ID: 9, Quantity: 3 
+[2025-05-16 11:49:57] Product data retrieved: {"id":9,"description":"Oversized handmade abaca scrunch bag! Spacious, durable, and eco-friendly\u2014perfect for carrying all your essentials in style while supporting sustainable fashion.","price":"120.00","qty":"15"}
+[2025-05-16 11:49:57] Available quantity: 15, Requested: 3 
+[2025-05-16 11:49:57] Price: 120, Subtotal: 360 
+[2025-05-16 11:49:57] Inserted order item 
+[2025-05-16 11:49:57] Updated inventory for product ID: 9 
+[2025-05-16 11:49:57] Added tracking record 
+[2025-05-16 11:49:57] Transaction committed successfully 
+[2025-05-16 11:54:20] Received order data: {"user_id":18,"payment_method":"COD","delivery_address":"Mahayag","total_amount":455,"items":[{"productId":6,"availableQty":30,"quantity":1},{"productId":10,"availableQty":25,"quantity":1}]}
+[2025-05-16 11:54:20] Created order with ID: 9 
+[2025-05-16 11:54:20] Processing item: {"productId":6,"availableQty":30,"quantity":1}
+[2025-05-16 11:54:20] Looking up product ID: 6, Quantity: 1 
+[2025-05-16 11:54:20] Product data retrieved: {"id":6,"description":"Step out in style with this handmade twine sling bag! Crafted from durable abaca fibers, it\u2019s eco-friendly, lightweight, and perfect for any adventure. A blend of fashion and function you\u2019ll love.","price":"380.00","qty":"30"}
+[2025-05-16 11:54:20] Available quantity: 30, Requested: 1 
+[2025-05-16 11:54:20] Price: 380, Subtotal: 380 
+[2025-05-16 11:54:20] Inserted order item 
+[2025-05-16 11:54:20] Updated inventory for product ID: 6 
+[2025-05-16 11:54:20] Processing item: {"productId":10,"availableQty":25,"quantity":1}
+[2025-05-16 11:54:20] Looking up product ID: 10, Quantity: 1 
+[2025-05-16 11:54:20] Product data retrieved: {"id":10,"description":"Stay stylish and eco-friendly with this handmade medium abaca scrunch bag! Perfectly sized for your essentials, it\u2019s durable, lightweight, and a chic addition to any outfit.","price":"75.00","qty":"25"}
+[2025-05-16 11:54:20] Available quantity: 25, Requested: 1 
+[2025-05-16 11:54:20] Price: 75, Subtotal: 75 
+[2025-05-16 11:54:20] Inserted order item 
+[2025-05-16 11:54:20] Updated inventory for product ID: 10 
+[2025-05-16 11:54:20] Added tracking record 
+[2025-05-16 11:54:20] Transaction committed successfully 

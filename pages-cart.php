@@ -420,10 +420,9 @@
 
         cartContainer.appendChild(summaryRow);
 
-        // Add checkout button event listener
+        // After all cart items are processed and totalPrice is calculated
         document.getElementById('checkout-btn').addEventListener('click', function() {
-            // Redirect to checkout page or handle checkout process
-            window.location.href = 'checkout.php';
+            window.location.href = `checkout.php?subtotal=${totalPrice.toFixed(2)}`;
         });
     }
 

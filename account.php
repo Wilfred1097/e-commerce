@@ -79,15 +79,16 @@ if (!isset($_COOKIE['DWHMA0'])) {
         <li class="ms-3">
           <?php
             if (isset($_COOKIE['DWHMA0'])) {
-              // If cookie exists, show logout icon
-              echo '<a href="homepage/mysql/logout.php" class="d-flex align-items-center" title="Logout">';
-              echo 'Logout';
-              echo '</a>';
+                // Show Profile and Logout links side by side
+                echo '<div style="display: flex; gap: 10px;">'; // flex container with gap
+                echo '<a href="messaging-page.php" class="d-flex align-items-center" title="Profile">Messages</a>';
+                echo '<a href="homepage/mysql/logout.php" class="d-flex align-items-center" title="Logout">Logout</a>';
+                echo '</div>';
             } else {
-              // If cookie does not exist, link to index.php
-              echo '<a href="index.php" class="d-flex align-items-center" title="Login">';
-              echo '<i class="bi bi-person" style="font-size: 1.5rem;"></i>';
-              echo '</a>';
+                // Show Login icon
+                echo '<a href="login-page.php" class="d-flex align-items-center" title="Login">';
+                echo '<i class="bi bi-person" style="font-size: 1.5rem;"></i>';
+                echo '</a>';
             }
           ?>
         </li>

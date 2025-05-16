@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
 
             <!-- Action Buttons -->
             <div class="d-flex gap-3">
-              <button class="btn btn-success btn-sm" onclick="startChat()"><i class="bi bi-chat-dots"></i> Chat</button>
+              <button class="btn btn-success btn-sm" onclick="startChat(<?php echo $product['id']; ?>)"><i class="bi bi-chat-dots"></i> Chat</button>
               <!-- Quantity input field -->
               <input type="number"
                  id="quantity_<?php echo $product['id']; ?>"
@@ -179,11 +179,33 @@ if (isset($_GET['id'])) {
 
   <!-- Optional: Chat Functionality Script -->
   <script>
-    function startChat() {
-      // Placeholder for chat initiation
-      alert("Starting chat with support...");
-    }
+    function startChat(productId) {
+      // Check if the DWHMA0 cookie exists
+      const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+      const hasDWHMA0 = cookies.some(cookie => cookie.startsWith('DWHMA0='));
 
+      if (hasDWHMA0) {
+        window.location.href = `messaging-page.php?product_id=${productId}`;
+      } else {
+        // Show SweetAlert warning
+        Swal.fire({
+          icon: 'warning',
+          title: 'Login Required',
+          text: 'You need to login to start messaging.',
+          showCancelButton: true,
+          confirmButtonText: 'Okay',
+          cancelButtonText: 'Login Now'
+        }).then((result) => {
+          if (result.isDismissed || result.dismiss === Swal.DismissReason.cancel) {
+            // User clicked "Login Now"
+            window.location.href = 'login-page.php';
+          } else {
+            // User clicked "Okay" or dismissed the alert
+            // Do nothing or any other action
+          }
+        });
+      }
+    }
 
     function addToCart(productId) {
       // Get the quantity input value
