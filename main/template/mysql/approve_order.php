@@ -26,7 +26,11 @@ try {
     // Commit changes
     $pdo->commit();
 
-    echo json_encode(['success' => true, 'message' => 'Order approved successfully.']);
+    // After successful update
+    echo json_encode([
+        'success' => true,
+        'message' => 'Order approved successfully.'
+    ]);
 
 } catch (Exception $e) {
     // Rollback on error

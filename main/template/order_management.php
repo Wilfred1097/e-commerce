@@ -303,6 +303,7 @@
                             if (!groupedOrders[orderId]) {
                                 groupedOrders[orderId] = {
                                     order_id: orderId,
+                                    gmail: item.gmail,
                                     first_name: item.first_name,
                                     last_name: item.last_name,
                                     payment_method: item.payment_method,
@@ -365,8 +366,8 @@
 
                             const actionButtons = order.tracking_status === 'Pending'
                                 ? `
-                                    <button class="btn btn-primary btn-sm" onclick="handleApprove('${order.order_id}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Approve</button>
-                                    <button class="btn btn-danger btn-sm" onclick="handleDecline('${order.order_id}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Decline</button>
+                                    <button class="btn btn-primary btn-sm" onclick="handleApprove('${order.order_id}', '${order.gmail}', '${order.first_name}', '${order.last_name}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Approve</button>
+                                    <button class="btn btn-danger btn-sm" onclick="handleDecline('${order.order_id}', '${order.gmail}', '${order.first_name}', '${order.last_name}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Decline</button>
                                   `
                                 : `
                                     <button class="btn btn-primary btn-sm" onclick="handleUpdateStatus('${order.order_id}', '${order.payment_method}')" ${isCancelledOrDelivered ? 'disabled' : ''}>Update Status</button>
@@ -494,7 +495,7 @@
             viewImageModal.show();
         }
 
-        function handleApprove(orderId) {
+        function handleApprove(orderId, gmail, fname, lname) {
             Swal.fire({
                 title: 'Approve Order?',
                 text: `Are you sure you want to approve order #${orderId}?`,
@@ -506,13 +507,34 @@
                 cancelButtonColor: '#d33'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Call the PHP backend
-                    fetch(`mysql/approve_order.php?id=${orderId}`)
+                    // Call the PHP backend to approve the order
+                    fetch(`mysql/approve_order.php?id=${encodeURIComponent(orderId)}`)
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
                                 Swal.fire('Approved!', `Order #${orderId} has been approved.`, 'success');
-                                fetchOrders(); // Reload the table to reflect status change
+                                fetchOrders(); // Reload the table
+
+                                // After successful approval, send OTP email
+                                fetch('mysql/sent_approve_notif.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: new URLSearchParams({
+                                        email: gmail,
+                                        first_name: fname,
+                                        last_name: lname
+                                    })
+                                })
+                                .then(res => res.text())
+                                .then(msg => {
+                                    console.log('OTP email response:', msg);
+                                })
+                                .catch(error => {
+                                    console.error('Error sending OTP:', error);
+                                    Swal.fire('Error', 'Failed to send OTP email.', 'error');
+                                });
                             } else {
                                 Swal.fire('Error', data.message, 'error');
                             }
@@ -525,46 +547,67 @@
             });
         }
 
-    function handleDecline(orderId) {
-        Swal.fire({
-            title: 'Decline Order?',
-            text: `Are you sure you want to decline order #${orderId}?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, Decline',
-            cancelButtonText: 'Cancel',
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#aaa',
-            input: 'text',
-            inputPlaceholder: 'Enter reason for decline',
-            inputValidator: (value) => {
-                if (!value) {
-                    return 'Please enter a reason!';
+        function handleDecline(orderId, gmail, fname, lname) {
+            Swal.fire({
+                title: 'Decline Order?',
+                text: `Are you sure you want to decline order #${orderId}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Decline',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#aaa',
+                input: 'text',
+                inputPlaceholder: 'Enter reason for decline',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Please enter a reason!';
+                    }
                 }
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const reason = result.value; // The reason entered by the user
-                // Call the PHP backend with orderId and reason
-                console.log(orderId);
-                console.log(reason);
-                fetch(`mysql/decline_order.php?id=${orderId}&reason=${encodeURIComponent(reason)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire('Declined!', `Order #${orderId} has been declined.`, 'success');
-                            fetchOrders(); // Reload the table to reflect status change
-                        } else {
-                            Swal.fire('Error', data.message, 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
-                    });
-            }
-        });
-    }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const reason = result.value;
+
+                    fetch(`mysql/decline_order.php?id=${orderId}&gmail=${gmail}&status=Decline&reason=${encodeURIComponent(reason)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Declined!', `Order #${orderId} has been declined.`, 'success');
+                                fetchOrders(); // Reload the table to reflect status change
+
+                                // Send decline notification
+                                fetch('mysql/sent_decline_notif.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: new URLSearchParams({
+                                        email: gmail,
+                                        first_name: fname,
+                                        last_name: lname,
+                                        reason: reason
+                                    })
+                                })
+                                .then(res => res.text())
+                                .then(msg => {
+                                    console.log('Decline email response:', msg);
+                                })
+                                .catch(error => {
+                                    console.error('Error sending decline email:', error);
+                                    Swal.fire('Error', 'Failed to send decline email.', 'error');
+                                });
+
+                            } else {
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+                        });
+                }
+            });
+        }
     </script>
 
     <script>
