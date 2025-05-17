@@ -69,7 +69,7 @@
                     <div class="header-top">
                       <h3>Sales Today</h3>
                       <div>
-                        <p>Wednesday 6, <span>Dec 2022</span></p>
+                        <!-- <p>Wednesday 6, <span>Dec 2022</span></p> -->
                       </div>
                     </div>
                   </div>
@@ -215,19 +215,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+             <!--  <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
                 <div class="card growthcard">
                   <div class="card-header card-no-border pb-0">
                     <div class="header-top">
                       <h3>Income Reports Analytics</h3>
-                      <!-- <div class="filter-controls">
-                          <div class="input-group">
-                            <input type="month" name="month_year" id="IncomemonthPicker" class="form-control">
-                            <div class="input-group-append">
-                              <button onclick="resetIncomeMonthPicker()" class="btn btn-primary">Reset</button>
-                            </div>
-                          </div>
-                        </div> -->
                     </div>
                   </div>
                   <div class="card-body pb-0">
@@ -276,7 +268,7 @@
                     </script>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
                 <div class="card">
                   <div class="row p-2 m-2">
@@ -578,36 +570,6 @@
               $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
           });
       });
-  </script>
-      <script>
-      function updateDateTime() {
-          const now = new Date();
-
-          // Options for formatting the date and time
-          const options = {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: true,
-          };
-
-          // Format date and time
-          const formattedDateTime = now.toLocaleString("en-US", options);
-
-          // Update the span with the current date and time
-          document.getElementById("currentDateTime").innerHTML = `
-              ${formattedDateTime}
-          `;
-      }
-
-      // Run the function once on page load
-      updateDateTime();
-
-      // Update the time every second
-      setInterval(updateDateTime, 1000);
   </script>
   </body>
 </html>

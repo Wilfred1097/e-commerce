@@ -92,13 +92,19 @@
                   <div class="card-body">
                       <div class="row" id="wrap">
                           <div class="col-md-12 col-lg-12">
-                              <div class="d-flex justify-content-between align-items-center mb-3">
-                                  <!-- Left side: Product List heading -->
-                                  <h2 class="mb-2 mb-md-0">Order List</h2>
-
-                                  <!-- Right side: Buttons -->
-                                  <div>
-                                    <input type="text" id="searchOrder" class="form-control" placeholder="Search order...">
+                              <div class="container-fluid mb-3">
+                                  <div class="row align-items-center justify-content-between">
+                                    <!-- Left side: Product List heading -->
+                                    <div class="col-12 col-md-auto mb-2 mb-md-0">
+                                      <h2 class="mb-0">Order List</h2>
+                                    </div>
+                                    <!-- Right side: Search and Button -->
+                                    <div class="col-12 col-md-auto d-flex align-items-center">
+                                      <input type="text" id="searchOrder" class="form-control me-2" placeholder="Search order...">
+                                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reportModal">
+                                          Generate Report
+                                        </button>
+                                    </div>
                                   </div>
                                 </div>
 
@@ -135,6 +141,55 @@
           <!-- Container-fluid ends-->
         </div>
 
+        <div id="reportContent" class="mt-4"></div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Generate Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="reportForm">
+                  <!-- Select Option -->
+                  <div class="mb-3">
+                    <label for="reportType" class="form-label">Report Type</label>
+                    <select class="form-select" id="reportType" required>
+                      <option value="" disabled selected>Select report type</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
+                      <option value="Ready for Pickup">Ready for Pickup</option>
+                      <option value="Picked Up">Picked Up</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                  </div>
+
+                  <!-- Start Date -->
+                  <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" required>
+                  </div>
+
+                  <!-- End Date -->
+                  <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" required>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="generateReportBtn">Generate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- VIEW IMAGE MODAL -->
         <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -155,6 +210,30 @@
         <!-- Page header end-->
       </div>
     </div>
+
+    <script>
+      document.getElementById('generateReportBtn').addEventListener('click', function() {
+        const reportType = document.getElementById('reportType').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        if (!reportType || !startDate || !endDate) {
+          alert('Please fill out all fields.');
+          return;
+        }
+
+        // Construct the URL with query parameters
+        const url = `mysql/export.php?reportType=${encodeURIComponent(reportType)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+
+        // Open the export in a new tab (or you can use window.location.href to open in same tab)
+        window.open(url, '_blank');
+
+        // Optional: Close the modal if needed
+        const modal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
+        modal.hide();
+      });
+    </script>
+
     <!-- Sweetalert js-->
     <script src="../assets/js/sweetalert/sweetalert2.min.js"></script>
     <!-- jquery-->
@@ -214,7 +293,7 @@
                         const orderTableBody = document.getElementById('orderTableBody');
                         orderTableBody.innerHTML = '';
 
-                        console.log(orders);
+                        // console.log(orders);
 
                         groupedOrders = {}; // Reset
 
