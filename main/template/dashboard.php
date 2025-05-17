@@ -63,24 +63,6 @@
           </div>
           <!-- Container-fluid starts-->
           <div class="container-fluid default-dashboard">
-            <div class="row">
-             <!--  <div class="col-xl-6 col-sm-6 box-col-6">
-                <div class="card welcome-banner">
-                  <div class="card-header p-0 card-no-border">
-                    <div class="welcome-card"><img class="w-100 img-fluid" src="../assets/images/dashboard-1/welcome-bg.png" alt=""/><img class="position-absolute img-1 img-fluid" src="../assets/images/dashboard-1/img-1.png" alt=""/><img class="position-absolute img-2 img-fluid" src="../assets/images/dashboard-1/img-2.png" alt=""/><img class="position-absolute img-3 img-fluid" src="../assets/images/dashboard-1/img-3.png" alt=""/><img class="position-absolute img-4 img-fluid" src="../assets/images/dashboard-1/img-4.png" alt=""/><img class="position-absolute img-5 img-fluid" src="../assets/images/dashboard-1/img-5.png" alt=""/></div>
-                  </div>
-                  <div class="card-body">
-                      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-                          <div class="d-flex align-items-center">
-                          </div>
-                          <p class="mb-0 ms-md-3">Welcome back! Let’s start from where you left.</p>
-                          <span id="currentDateTime" class="d-flex align-items-center ms-md-3">
-                              <span class="ms-1">Loading...</span>
-                          </span>
-                      </div>
-                  </div>
-                </div> -->
-              </div>
               <div class="col-xxl-12 col-xl-12 proorder-xxl-12 col-lg-12 box-col-12">
                 <div class="card job-card">
                   <div class="card-header pb-0 card-no-border">
@@ -107,13 +89,13 @@
                                   require 'mysql/conn.php';
 
                                   // Prepare and execute the query
-                                  $stmt = $pdo->prepare("SELECT SUM(total_amount) AS total_amount_today FROM orders WHERE DATE(date_updated) = CURRENT_DATE() AND `order_status` in ('Delivered', 'Picked Up')");
+                                  $stmt = $pdo->prepare("SELECT COALESCE(SUM(o.total_amount), 0) AS total_amount_sum FROM orders o WHERE DATE(o.date_updated) = CURDATE() GROUP BY DATE(o.date_updated);");
                                   $stmt->execute();
 
                                   // Fetch the result
                                   $result = $stmt->fetch(PDO::FETCH_ASSOC);
                                   // Get the total amount, default to 0 if null
-                                  $totalSalesToday = $result['total_amount_today'] ?? 0;
+                                  $totalSalesToday = $result['total_amount_sum'] ?? 0;
 
                                   // Format the number if needed, e.g., currency
                                   echo number_format($totalSalesToday, 2);
@@ -167,59 +149,69 @@
                         </div>
                       </li>
                     </ul>
-                    <div class="table-responsive theme-scrollbar">
+                   <!--  <div class="table-responsive theme-scrollbar">
                       <table class="table display" style="width:100%">
                         <thead>
                           <tr>
-                            <th>Time </th>
-                            <th>Job </th>
-                            <th>Company</th>
-                            <th class="text-center">Employee </th>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Order Method</th>
+                            <th>Total</th>
+                            <th class="text-center">Status</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>10:AM</td>
-                            <td>Maintenace</td>
-                            <td>Apple Inc.</td>
-                            <td>
-                              <div class="d-flex align-items-center gap-2">
-                                <div class="flex-shrink-0"><img src="../assets/images/dashboard-1/user/1.png" alt=""/></div>
-                                <div class="flex-grow-1">
-                                  <h6>Michele Ronaldo</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>07:AM</td>
-                            <td>General</td>
-                            <td>Hewlett packard</td>
-                            <td>
-                              <div class="d-flex align-items-center gap-2">
-                                <div class="flex-shrink-0"><img src="../assets/images/dashboard-1/user/2.png" alt=""/></div>
-                                <div class="flex-grow-1">
-                                  <h6>Naomi watson</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>03:AM</td>
-                            <td>Cleaning</td>
-                            <td>Microsoft</td>
-                            <td>
-                              <div class="d-flex align-items-center gap-2">
-                                <div class="flex-shrink-0"><img src="../assets/images/dashboard-1/user/3.png" alt=""/></div>
-                                <div class="flex-grow-1">
-                                  <h6>Dann Petty</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
+                          <?php
+                          include 'mysql/conn.php';
+
+                          try {
+                              $sql = "
+                                  SELECT orders.*, users.*, COUNT(order_items.order_id) AS item_quantity
+                                  FROM `orders`
+                                  JOIN order_tracking ON order_tracking.order_id = orders.order_id
+                                  JOIN users ON users.id = orders.user_id
+                                  JOIN order_items ON order_items.order_id = orders.order_id
+                                  WHERE order_tracking.status IN ('Delivered', 'Picked Up')
+                                    AND DATE(order_tracking.date_updated) = CURRENT_DATE()
+                                  GROUP BY orders.order_id, users.id;
+                              ";
+
+                              $stmt = $pdo->prepare($sql);
+                              $stmt->execute();
+                              $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                              foreach ($results as $row) {
+                                  $first_name = isset($row['first_name']) ? $row['first_name'] : '';
+                                  $middle_name = isset($row['middle_name']) ? $row['middle_name'] : '';
+                                  $last_name = isset($row['last_name']) ? $row['last_name'] : '';
+                                  $full_name = trim("$first_name $middle_name $last_name");
+
+                                  $id = isset($row['order_id']) ? $row['order_id'] : 'N/A';
+                                  $order_method = isset($row['payment_method']) ? $row['payment_method'] : 'Pick Up'; // adjust field
+                                  $total_amount = isset($row['total_amount']) ? $row['total_amount'] : 'N/A';
+                                  $order_status = isset($row['order_status']) ? $row['order_status'] : 'N/A';
+
+                                  echo "<tr>";
+                                  echo "<td>{$id}</td>";
+                                  echo "<td>{$full_name}</td>";
+                                  echo "<td>{$order_method}</td>";
+                                  echo "<td>
+                                          <div class='d-flex align-items-center gap-2'>
+                                            <div class='flex-grow-1'>
+                                              <h6>₱ {$total_amount}</h6>
+                                            </div>
+                                          </div>
+                                        </td>";
+                                  echo "<td>{$order_status}</td>";
+                                  echo "</tr>";
+                              }
+                          } catch (PDOException $e) {
+                              echo "<tr><td colspan='4'>Error: " . $e->getMessage() . "</td></tr>";
+                          }
+                          ?>
                         </tbody>
                       </table>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -227,80 +219,60 @@
                 <div class="card growthcard">
                   <div class="card-header card-no-border pb-0">
                     <div class="header-top">
-                      <h3>Income Reports</h3>
-                      <div class="filter-controls">
+                      <h3>Income Reports Analytics</h3>
+                      <!-- <div class="filter-controls">
                           <div class="input-group">
                             <input type="month" name="month_year" id="IncomemonthPicker" class="form-control">
                             <div class="input-group-append">
                               <button onclick="resetIncomeMonthPicker()" class="btn btn-primary">Reset</button>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                     </div>
                   </div>
                   <div class="card-body pb-0">
-                    <canvas id="ordersChart" width="600" height="400"></canvas>
+                    <div class="container my-4">
+                      <canvas id="myChart" style="width: 100%;"></canvas>
+                    </div>
 
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <script>
-                      loadChart();
-                        // Function to fetch data and render chart
-                        function loadChart() {
-                            fetch('mysql/fetch_sold_analytics.php') // replace with your actual PHP endpoint
-                                .then(response => response.json())
-                                .then(json => {
-                                    if (json.success) {
-                                        const labels = [];
-                                        const dataPoints = [];
-
-                                        // Populate labels and dataPoints from the fetched data
-                                        json.data.forEach(item => {
-                                            labels.push(item.date);
-                                            dataPoints.push(item.total_amount);
-                                        });
-
-                                        // Destroy previous chart if exists
-                                        if (window.myChart) {
-                                            window.myChart.destroy();
-                                        }
-
-                                        // Get context
-                                        const ctx = document.getElementById('ordersChart').getContext('2d');
-
-                                        // Create chart
-                                        window.myChart = new Chart(ctx, {
-                                            type: 'bar', // or 'bar', 'pie', etc.
-                                            data: {
-                                                labels: labels,
-                                                datasets: [{
-                                                    label: 'Total Amount',
-                                                    data: dataPoints,
-                                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                                    borderWidth: 2,
-                                                    fill: true,
-                                                    tension: 0.4
-                                                }]
-                                            },
-                                            options: {
-                                                responsive: true,
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        alert('Failed to load data: ' + json.message);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching data:', error);
-                                });
+                    fetch('mysql/fetch_sold_analytics.php')
+                      .then(response => response.json())
+                      .then(data => {
+                        if (data.success) {
+                          renderChart(data.data);
+                        } else {
+                          console.error('Error:', data.message);
                         }
+                      })
+                      .catch(error => console.error('Fetch error:', error));
 
-                        // Call the function after page loads
-                        window.onload = loadChart;
+                    function renderChart(data) {
+                      const ctx = document.getElementById('myChart').getContext('2d');
+                      const labels = data.map(item => item.date);
+                      const amounts = data.map(item => item.total_amount);
+
+                      new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                          labels: labels,
+                          datasets: [{
+                            label: 'Total Amount',
+                            data: amounts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          scales: {
+                            y: { beginAtZero: true }
+                          }
+                        }
+                      });
+                    }
                     </script>
                   </div>
                 </div>
@@ -326,6 +298,7 @@
                             <th>Date Ordered</th>
                             <th>Customer Name</th>
                             <th>Order Method</th>
+                            <th>Ordered Product Qty.</th>
                             <th>Order Status</th>
                             <th>Amount</th>
                             <th>Delivery Address</th>
@@ -360,6 +333,7 @@
                             <th>Date Ordered</th>
                             <th>Customer Name</th>
                             <th>Order Method</th>
+                            <th>Ordered Product Qty.</th>
                             <th>Order Status</th>
                             <th>Amount</th>
                             <th>Delivery Address</th>
@@ -396,6 +370,7 @@
                             <th>Date Ordered</th>
                             <th>Customer Name</th>
                             <th>Order Method</th>
+                            <th>Ordered Product Qty.</th>
                             <th>Order Status</th>
                             <th>Amount</th>
                             <th>Delivery Address</th>
@@ -431,6 +406,7 @@
         <!-- Page header end-->
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- jquery-->
     <script src="../assets/js/vendors/jquery/jquery.min.js"></script>
     <!-- bootstrap js-->
@@ -499,6 +475,9 @@
                                   <td>${new Date(pending_orders.order_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</td>
                                   <td>${pending_orders.first_name} ${pending_orders.middle_name} ${pending_orders.last_name}</td>
                                   <td>${pending_orders.payment_method}</td>
+                                  <td>
+                                    ${pending_orders.item_quantity} ${pending_orders.item_quantity === 1 ? 'product' : 'products'}
+                                  </td>
                                   <td>${pending_orders.order_status}</td>
                                   <td>₱${pending_orders.total_amount ? parseFloat(pending_orders.total_amount).toLocaleString('en-PH', { minimumFractionDigits: 2 }) : 'N/A'}</td>
                                   <td>${pending_orders.delivery_address}</td>
@@ -536,6 +515,9 @@
                                   <td>${new Date(pending_orders.order_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</td>
                                   <td>${pending_orders.first_name} ${pending_orders.middle_name} ${pending_orders.last_name}</td>
                                   <td>${pending_orders.payment_method}</td>
+                                  <td>
+                                    ${pending_orders.item_quantity} ${pending_orders.item_quantity === 1 ? 'product' : 'products'}
+                                  </td>
                                   <td>${pending_orders.order_status}</td>
                                   <td>₱${pending_orders.total_amount ? parseFloat(pending_orders.total_amount).toLocaleString('en-PH', { minimumFractionDigits: 2 }) : 'N/A'}</td>
                                   <td>${pending_orders.delivery_address}</td>
@@ -573,6 +555,9 @@
                                   <td>${new Date(pending_orders.order_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</td>
                                   <td>${pending_orders.first_name} ${pending_orders.middle_name} ${pending_orders.last_name}</td>
                                   <td>${pending_orders.payment_method}</td>
+                                  <td>
+                                    ${pending_orders.item_quantity} ${pending_orders.item_quantity === 1 ? 'product' : 'products'}
+                                  </td>
                                   <td>${pending_orders.order_status}</td>
                                   <td>₱${pending_orders.total_amount ? parseFloat(pending_orders.total_amount).toLocaleString('en-PH', { minimumFractionDigits: 2 }) : 'N/A'}</td>
                                   <td>${pending_orders.delivery_address}</td>
