@@ -23,17 +23,12 @@
           <div class="user-wrap">
             <div class="user-img"><img src="../assets/images/profile.png" alt="user"/></div>
             <div class="user-content">
-              <h6>Wil Fred</h6>
-              <p class="mb-0">Admin<i class="fa-solid fa-chevron-down"></i></p>
+              <h6>Admin</h6>
+              <!-- <p class="mb-0">Admin<i class="fa-solid fa-chevron-down"></i></p> -->
             </div>
           </div>
           <div class="custom-menu overflow-hidden">
             <ul class="profile-body">
-              <li class="d-flex">
-                <svg class="svg-color">
-                  <use href="../assets/svg/iconly-sprite.svg#Profile"></use>
-                </svg><a class="ms-2" href="user-profile.php">Account</a>
-              </li>
               <li class="d-flex">
                 <svg class="svg-color">
                   <use href="../assets/svg/iconly-sprite.svg#Login"></use>

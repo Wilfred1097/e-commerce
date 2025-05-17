@@ -16,6 +16,7 @@ $sql = "SELECT
             o.order_date,
             o.updated_at,
             o.refference_num,
+            o.reasons,
             t.status AS tracking_status,
             t.status_date AS status_updated_at,
             t.comments AS status_comments,

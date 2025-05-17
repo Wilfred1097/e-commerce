@@ -148,6 +148,7 @@ if (isset($_GET['id'])) {
                  value="1"
                  min="1"
                  max="<?php echo htmlspecialchars($product['qty']); ?>"
+                 step="1"
                  style="width: 50px; margin: 0px 10px 0px 20px;"
                  oninput="validateQuantity(<?php echo $product['id']; ?>)"
                  onchange="validateQuantity(<?php echo $product['id']; ?>)" />
@@ -165,16 +166,20 @@ if (isset($_GET['id'])) {
     </section>
     <script>
       function validateQuantity(productId) {
-          const input = document.getElementById('quantity_' + productId);
-          const max = parseInt(input.max);
-          let value = parseInt(input.value);
+            const input = document.getElementById('quantity_' + productId);
+            let value = input.value;
 
-          if (isNaN(value) || value < 1) {
-              input.value = 1; // Reset to minimum if invalid
-          } else if (value > max) {
-              input.value = max; // Reset to max if over
-          }
-      }
+            // Parse value as integer
+            let parsedValue = parseInt(value, 10);
+
+            if (isNaN(parsedValue) || parsedValue < 1) {
+                input.value = 1; // Reset to minimum if invalid
+            } else if (parsedValue > parseInt(input.max, 10)) {
+                input.value = input.max; // Reset to max if over limit
+            } else {
+                input.value = parsedValue; // Ensure it's a number
+            }
+        }
       </script>
 
   <!-- Optional: Chat Functionality Script -->

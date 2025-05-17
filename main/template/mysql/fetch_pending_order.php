@@ -5,7 +5,24 @@ require 'check_cookies.php'; // Check if the cookie is present
 
 try {
     // Query to fetch all transactions
-    $sql = "SELECT orders.*, users.*, COUNT(order_items.order_id) AS item_quantity FROM `orders` JOIN order_tracking ON order_tracking.order_id = orders.order_id JOIN users ON users.id = orders.user_id JOIN order_items ON order_items.order_id = orders.order_id WHERE order_tracking.status = 'Delivered' GROUP BY orders.order_id, users.id;";
+    $sql = "SELECT
+                orders.*,
+                users.*,
+                COUNT(order_items.order_id) AS item_quantity
+            FROM
+                `orders`
+            JOIN order_tracking ON order_tracking.order_id = orders.order_id
+            JOIN users ON users.id = orders.user_id
+            JOIN order_items ON order_items.order_id = orders.order_id
+            WHERE
+                order_tracking.status = 'Delivered'
+            GROUP BY
+                orders.order_id,
+                users.id
+            ORDER BY
+                orders.order_id
+            DESC
+                ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 

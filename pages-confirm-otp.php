@@ -45,10 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Set a cookie for the user_email and user_type
                 $user_data = json_encode(['email' => $user['gmail'], 'role' => $user['role']]);
-                setcookie('DWHMA', $user_data, time() + 3600, '/', '', false, true); // Cookie valid for 1 hour
+                setcookie('DWHMA0', $user_data, time() + 3600, '/', '', false, true); // Cookie valid for 1 hour
 
                 // Redirect to dashboard
-                header("Location: main/template/dashboard.php");
+                header("Location: account.php");
                 exit;
             } else {
                 $errorMessage = 'Invalid OTP. Please try again.';

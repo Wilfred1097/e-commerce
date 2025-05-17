@@ -10,18 +10,25 @@ if (!isset($_GET['id'])) {
 }
 
 $order_id = $_GET['id'];
+$reasons = $_GET['reason'];
 
 try {
     // Begin transaction
     $pdo->beginTransaction();
 
     // Update orders table
-    $stmt1 = $pdo->prepare("UPDATE `orders` SET `order_status` = 'Cancelled' WHERE `order_id` = :order_id");
-    $stmt1->execute(['order_id' => $order_id]);
+    $stmt1 = $pdo->prepare("UPDATE `orders` SET `order_status` = 'Cancelled', `reasons` =  :reasons WHERE `order_id` = :order_id");
+    $stmt1->execute([
+        'order_id' => $order_id,
+        'reasons' => $reasons // assuming $reason contains the reason string
+    ]);
 
     // Update order_tracking table
-    $stmt2 = $pdo->prepare("UPDATE `order_tracking` SET `status` = 'Cancelled', `comments` = 'Order Decline' WHERE `order_id` = :order_id");
-    $stmt2->execute(['order_id' => $order_id]);
+    $stmt2 = $pdo->prepare("UPDATE `order_tracking` SET `status` = 'Cancelled', `reasons` = :reasons, `comments` = 'Order Decline' WHERE `order_id` = :order_id");
+    $stmt2->execute([
+        'order_id' => $order_id,
+        'reasons' => $reasons,
+    ]);
 
     // Commit changes
     $pdo->commit();

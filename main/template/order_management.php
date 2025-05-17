@@ -309,6 +309,7 @@
                                     delivery_address: item.delivery_address,
                                     total_amount: item.total_amount,
                                     current_status: item.current_status,
+                                    reasons: item.reasons,
                                     refference_num: item.refference_num,
                                     tracking_status: item.tracking_status || '-',
                                     status_comments: item.status_comments || '-',
@@ -383,7 +384,10 @@
                                 </td>
                                 <td>${order.total_amount}</td>
                                 <td>${order.current_status}</td>
-                                <td>${order.status_comments}</td>
+                                <td>
+                                  ${order.status_comments}
+                                  ${order.reasons ? `<br><strong>Reason:</strong> ${order.reasons}` : ''}
+                                </td>
                                 <td>${imagesHtml}</td>
                                 <td>${formatDate(order.order_date)}</td>
                                 <td>${actionButtons}</td>
@@ -521,36 +525,46 @@
             });
         }
 
-        function handleDecline(orderId) {
-            Swal.fire({
-                title: 'Decline Order?',
-                text: `Are you sure you want to decline order #${orderId}?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Decline',
-                cancelButtonText: 'Cancel',
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#aaa'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Call the PHP backend
-                    fetch(`mysql/decline_order.php?id=${orderId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire('Decline!', `Order #${orderId} has been decline.`, 'success');
-                                fetchOrders(); // Reload the table to reflect status change
-                            } else {
-                                Swal.fire('Error', data.message, 'error');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
-                        });
+    function handleDecline(orderId) {
+        Swal.fire({
+            title: 'Decline Order?',
+            text: `Are you sure you want to decline order #${orderId}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Decline',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#aaa',
+            input: 'text',
+            inputPlaceholder: 'Enter reason for decline',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Please enter a reason!';
                 }
-            });
-        }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const reason = result.value; // The reason entered by the user
+                // Call the PHP backend with orderId and reason
+                console.log(orderId);
+                console.log(reason);
+                fetch(`mysql/decline_order.php?id=${orderId}&reason=${encodeURIComponent(reason)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Declined!', `Order #${orderId} has been declined.`, 'success');
+                            fetchOrders(); // Reload the table to reflect status change
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+                    });
+            }
+        });
+    }
     </script>
 
     <script>

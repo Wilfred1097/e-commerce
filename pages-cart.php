@@ -422,7 +422,44 @@
 
         // After all cart items are processed and totalPrice is calculated
         document.getElementById('checkout-btn').addEventListener('click', function() {
-            window.location.href = `checkout.php?subtotal=${totalPrice.toFixed(2)}`;
+            // Function to get a cookie value by name
+            function getCookie(name) {
+                const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+                for (let cookie of cookies) {
+                    if (cookie.startsWith(name + '=')) {
+                        return cookie.substring(name.length + 1);
+                    }
+                }
+                return null;
+            }
+
+            // Check if DWHMA0 cookie exists
+            const dwhmaCookie = getCookie('DWHMA0');
+
+            if (!dwhmaCookie) {
+                // Show SweetAlert warning if not logged in
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Login Required',
+                    text: 'Please login first before proceeding to checkout.',
+                    confirmButtonText: 'OK'
+                });
+                // Redirect to login page after alert is dismissed
+                // Optional: you can add a delay or redirect immediately
+                // For example, redirect after 1 second:
+                // setTimeout(() => { window.location.href = 'login-page.php'; }, 1000);
+                // Or redirect immediately after alert:
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Login Required',
+                    text: 'Please login first before proceeding to checkout.',
+                }).then(() => {
+                    window.location.href = 'login-page.php';
+                });
+            } else {
+                // Proceed to checkout if cookie exists
+                window.location.href = `checkout.php?subtotal=${totalPrice.toFixed(2)}`;
+            }
         });
     }
 
