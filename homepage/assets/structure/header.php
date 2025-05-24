@@ -6,8 +6,8 @@
     <ul>
       <li><a href="#hero" class="active">Home<br></a></li>
       <li><a href="#product">Product</a></li>
+      <li><a href="#best-selling">Best Selling Product</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
       <li>
         <a href="pages-cart.php" class="d-flex align-items-center" title="Cart">

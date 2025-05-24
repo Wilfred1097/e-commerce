@@ -88,6 +88,31 @@
 
     </section><!-- /Menu Section -->
 
+    <section id="best-selling" class="menu section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <p><span>Check Our</span> <span class="description-title">Best Selling Product</span></p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="tab-pane fade active show" id="menu-starters">
+
+            <div class="row gy-5 justify-content-center" id="best-selling-products">
+              <!-- Dynamic product items will be appended here -->
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /Best Selling Product -->
+
     <!-- About Section -->
     <section id="about" class="about section">
 
@@ -101,31 +126,31 @@
 
         <div class="row gy-4">
           <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
-            <img src="homepage/assets/img/about.jpg" class="img-fluid mb-4" alt="">
+            <img src="https://ecowarriorph.com/wp-content/uploads/2020/01/abaca1.jpg" class="img-fluid mb-4" alt="">
             <div class="book-a-table">
-              <h3>Book a Table</h3>
-              <p>+1 5589 55488 55</p>
+              <h3>Call or text for more inquiries.</h3>
+              <p>+63 9709 05153 54</p>
             </div>
           </div>
           <div class="col-lg-5" data-aos="fade-up" data-aos-delay="250">
             <div class="content ps-0 ps-lg-5">
               <p class="fst-italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
+                Handcrafting abaca bags is a time-honored tradition that showcases the skill and creativity of local artisans.
               </p>
               <ul>
-                <li><i class="bi bi-check-circle-fill"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                <li><i class="bi bi-check-circle-fill"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                <li><i class="bi bi-check-circle-fill"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>Each bag is carefully woven using natural abaca fibers, known for their durability and eco-friendliness.
+The process involves intricate patterns and attention to detail, making every piece unique and culturally significant.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>Artisans dedicate hours of manual labor to ensure that every bag meets the standards of quality and craftsmanship.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>These handmade abaca bags not only promote sustainability but also support the livelihood of indigenous communities and help preserve traditional weaving techniques passed down through generations.</span></li>
               </ul>
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
-              </p>
+              <!--<p>-->
+              <!--  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate-->
+              <!--  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident-->
+              <!--</p>-->
 
               <div class="position-relative mt-4">
-                <img src="homepage/assets/img/about-2.jpg" class="img-fluid" alt="">
-                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+                <img src="https://cf.shopee.ph/file/sg-11134201-23010-quabvokocylvd9" class="img-fluid" alt="">
+                <a href="https://www.youtube.com/watch?v=M-PRMotIsco" class="glightbox pulsating-play-btn"></a>
               </div>
             </div>
           </div>
@@ -579,63 +604,66 @@
     <!-- /Book A Table Section -->
 
     <!-- Gallery Section -->
-    <section id="gallery" class="gallery section light-background">
+    <!--<section id="gallery" class="gallery section light-background">-->
 
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Gallery</h2>
-        <p><span>Check</span> <span class="description-title">Our Gallery</span></p>
-      </div>
+    <!--  <div class="container section-title" data-aos="fade-up">-->
+    <!--    <h2>Gallery</h2>-->
+    <!--    <p><span>Check</span> <span class="description-title">Our Gallery</span></p>-->
+    <!--  </div>-->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!--  <div class="container" data-aos="fade-up" data-aos-delay="100">-->
 
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "centeredSlides": true,
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 1,
-                  "spaceBetween": 0
-                },
-                "768": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 20
-                },
-                "1200": {
-                  "slidesPerView": 5,
-                  "spaceBetween": 20
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-1.jpg"><img src="homepage/assets/img/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-2.jpg"><img src="homepage/assets/img/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-3.jpg"><img src="homepage/assets/img/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-4.jpg"><img src="homepage/assets/img/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-5.jpg"><img src="homepage/assets/img/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-6.jpg"><img src="homepage/assets/img/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-7.jpg"><img src="homepage/assets/img/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>
-            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-8.jpg"><img src="homepage/assets/img/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
+    <!--    <div class="swiper init-swiper">-->
+    <!--      <script type="application/json" class="swiper-config">-->
+    <!--        {-->
+    <!--          "loop": true,-->
+    <!--          "speed": 600,-->
+    <!--          "autoplay": {-->
+    <!--            "delay": 5000-->
+    <!--          },-->
+    <!--          "slidesPerView": "auto",-->
+    <!--          "centeredSlides": true,-->
+    <!--          "pagination": {-->
+    <!--            "el": ".swiper-pagination",-->
+    <!--            "type": "bullets",-->
+    <!--            "clickable": true-->
+    <!--          },-->
+    <!--          "breakpoints": {-->
+    <!--            "320": {-->
+    <!--              "slidesPerView": 1,-->
+    <!--              "spaceBetween": 0-->
+    <!--            },-->
+    <!--            "768": {-->
+    <!--              "slidesPerView": 3,-->
+    <!--              "spaceBetween": 20-->
+    <!--            },-->
+    <!--            "1200": {-->
+    <!--              "slidesPerView": 5,-->
+    <!--              "spaceBetween": 20-->
+    <!--            }-->
+    <!--          }-->
+    <!--        }-->
+    <!--      </script>-->
+    <!--      <div class="swiper-wrapper align-items-center">-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-1.jpg"><img src="homepage/assets/img/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-2.jpg"><img src="homepage/assets/img/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-3.jpg"><img src="homepage/assets/img/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-4.jpg"><img src="homepage/assets/img/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-5.jpg"><img src="homepage/assets/img/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-6.jpg"><img src="homepage/assets/img/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-7.jpg"><img src="homepage/assets/img/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--        <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="homepage/assets/img/gallery/gallery-8.jpg"><img src="homepage/assets/img/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>-->
+    <!--      </div>-->
+    <!--      <div class="swiper-pagination"></div>-->
+    <!--    </div>-->
 
-      </div>
+    <!--  </div>-->
 
-    </section>
+    <!--</section>-->
     <!-- /Gallery Section -->
+
+    <!-- /Best Selling Product -->
+    
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
@@ -643,7 +671,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
-        <p><span>Need Help?</span> <span class="description-title">Contact Us</span></p>
+        <p><span>Need Help?</span> <span class="description-title">Contact or Visit Us</span></p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -653,87 +681,79 @@
           <iframe style="width: 100%; height: 400px;"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.47006561567!2d123.3330560118608!3d8.155303391841326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3254652f084dce41%3A0x1051d0b61f630f54!2sDumingag%20Women%20Handicraft%20Makers%20Association!5e0!3m2!1sen!2sph!4v1747237143093!5m2!1sen!2sph" allowfullscreen="" ></iframe>
         </div><!-- End Google Maps -->
 
-        <div class="row gy-4">
+        <!--<div class="row gy-4">-->
 
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="200">
-              <i class="icon bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Address</h3>
-                <p>DWHMA Community Center - Dumingag</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
+        <!--  <div class="col-md-6">-->
+        <!--    <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="200">-->
+        <!--      <i class="icon bi bi-geo-alt flex-shrink-0"></i>-->
+        <!--      <div>-->
+        <!--        <h3>Address</h3>-->
+        <!--        <p>DWHMA Community Center - Dumingag</p>-->
+        <!--      </div>-->
+        <!--    </div>-->
+        <!--  </div-->
 
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="300">
-              <i class="icon bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Us</h3>
-                <p>+1 5589 55488 55</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
+        <!--  <div class="col-md-6">-->
+        <!--    <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="300">-->
+        <!--      <i class="icon bi bi-telephone flex-shrink-0"></i>-->
+        <!--      <div>-->
+        <!--        <h3>Call Us</h3>-->
+        <!--        <p>+63 9709 05153 54</p>-->
+        <!--      </div>-->
+        <!--    </div>-->
+        <!--  </div>-->
 
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="400">
-              <i class="icon bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p>info@example.com</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
+        <!--  <div class="col-md-6">-->
+        <!--    <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="500">-->
+        <!--      <i class="icon bi bi-clock flex-shrink-0"></i>-->
+        <!--      <div>-->
+        <!--        <h3>Opening Hours<br></h3>-->
+        <!--        <p><strong>Mon-Fri:</strong> 9AM - 4PM</p>-->
+        <!--      </div>-->
+        <!--    </div>-->
+        <!--  </div>-->
 
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="500">
-              <i class="icon bi bi-clock flex-shrink-0"></i>
-              <div>
-                <h3>Opening Hours<br></h3>
-                <p><strong>Mon-Sat:</strong> 11AM - 23PM; <strong>Sunday:</strong> Closed</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
+        <!--</div>-->
 
-        </div>
+        <!--<form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">-->
+        <!--  <div class="row gy-4">-->
 
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
-          <div class="row gy-4">
+        <!--    <div class="col-md-6">-->
+        <!--      <input type="text" name="name" class="form-control" placeholder="Your Name" required="">-->
+        <!--    </div>-->
 
-            <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-            </div>
+        <!--    <div class="col-md-6 ">-->
+        <!--      <input type="email" class="form-control" name="email" placeholder="Your Email" required="">-->
+        <!--    </div>-->
 
-            <div class="col-md-6 ">
-              <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-            </div>
+        <!--    <div class="col-md-12">-->
+        <!--      <input type="text" class="form-control" name="subject" placeholder="Subject" required="">-->
+        <!--    </div>-->
 
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-            </div>
+        <!--    <div class="col-md-12">-->
+        <!--      <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>-->
+        <!--    </div>-->
 
-            <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-            </div>
+        <!--    <div class="col-md-12 text-center">-->
+        <!--      <div class="loading">Loading</div>-->
+        <!--      <div class="error-message"></div>-->
+        <!--      <div class="sent-message">Your message has been sent. Thank you!</div>-->
 
-            <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
+        <!--      <button type="submit">Send Message</button>-->
+        <!--    </div>-->
 
-              <button type="submit">Send Message</button>
-            </div>
-
-          </div>
-        </form><!-- End Contact Form -->
+        <!--  </div>-->
+        <!--</form>-->
+        <!-- End Contact Form -->
 
       </div>
 
-    </section><!-- /Contact Section -->
+    </section>
+    <!-- /Contact Section -->
 
   </main>
 
-  <footer id="footer" class="footer white-background">
+  <footer id="footer" class="footer white-background justify-content-center align-items-center">
 
     <div class="container">
       <div class="row gy-3">
@@ -753,8 +773,8 @@
           <div>
             <h4>Contact</h4>
             <p>
-              <strong>Phone:</strong> <span>+1 5589 55488 55</span><br>
-              <strong>Email:</strong> <span>info@example.com</span><br>
+              <strong>Phone:</strong> <span>+63 9709 05153 54</span><br>
+              <!--<strong>Email:</strong> <span>info@example.com</span><br>-->
             </p>
           </div>
         </div>
@@ -764,32 +784,16 @@
           <div>
             <h4>Opening Hours</h4>
             <p>
-              <strong>Mon-Sat:</strong> <span>11AM - 23PM</span><br>
-              <strong>Sunday</strong>: <span>Closed</span>
+              <strong>Mon-Fi:</strong> <span>9AM - 4PM</span><br>
             </p>
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6">
-          <h4>Follow Us</h4>
-          <div class="social-links d-flex">
-            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <span>All Rights Reserved</span></p>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
         Designed by <a href="https://github.com/Wilfred1097">Wil Fred</a>
       </div>
     </div>
@@ -800,7 +804,7 @@
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- <div id="preloader"></div> -->
 
   <!-- Vendor JS Files -->
   <script src="homepage/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -960,6 +964,41 @@
       // Call this function when the page loads
       window.addEventListener('DOMContentLoaded', updateCartBadge);
   </script>
+
+  <script>
+    $(document).ready(function() {
+        const dataUrl = 'homepage/mysql/get_best_selling_products.php';
+
+        $.ajax({
+            url: dataUrl,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success' && response.data.length > 0) {
+                    response.data.forEach(function(product) {
+                        const productHtml = `
+                            <div class="col-lg-4 menu-item">
+                                <a href="product-page.php?id=${product.id}" class="glightbox">
+                                 <img src="main/template/mysql/${product.image}" class="menu-img img-fluid" alt="${product.product_types}">
+                                </a>
+                                <h5>Artisan: ${product.owner}</h5>
+                                <h5>Sold Item: ${product.number_of_orders}</h5>
+                                <p class="ingredients">${product.product_types}</p>
+                                <p class="price">₱${product.price}</p>
+                            </div>
+                        `;
+                        $('#best-selling-products').append(productHtml);
+                    });
+                } else {
+                    $('#best-selling-products').html('<p>No products found.</p>');
+                }
+            },
+            error: function() {
+                $('#best-selling-products').html('<p>Failed to load products.</p>');
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
