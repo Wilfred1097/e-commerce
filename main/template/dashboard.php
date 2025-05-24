@@ -249,6 +249,42 @@
                     <div class="row p-2 m-2">
                       <!-- Title - full width on mobile, half width on larger screens -->
                       <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <h3>Best Selling Products</h3>
+                      </div>
+                      <!-- Search box - full width on mobile, half width on larger screens -->
+                      <div class="col-12 col-md-6">
+                        <input type="text" id="search-New-Orders" class="form-control" placeholder="Search New Orders...">
+                      </div>
+                    </div>
+                    <div class="card-body transaction-history pt-0">
+                      <div class="table-responsive theme-scrollbar">
+                        <table class="table display table-bordernone" id="best-selling" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>Product ID</th>
+                              <th>Number of Orders</th>
+                              <th>Product Image</th>
+                              <th>Product Owner</th>
+                              <th>Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="card-body pt-2">
+              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                  <div class="card">
+                    <div class="row p-2 m-2">
+                      <!-- Title - full width on mobile, half width on larger screens -->
+                      <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <h3>New Order</h3>
                       </div>
                       <!-- Search box - full width on mobile, half width on larger screens -->
@@ -359,6 +395,20 @@
             </div>
           </div>
 
+          <!-- VIEW IMAGE MODAL -->
+          <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="viewImageModalLabel">Product Image</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                          <img id="modalImage" src="" alt="Product Image" class="img-fluid">
+                      </div>
+                  </div>
+              </div>
+          </div>
 
             <!-- VIEW EVENT IMAGE MODAL -->
             <div class="modal fade" id="viewEventImageModal" tabindex="-1" aria-labelledby="viewEventImageModalLabel" aria-hidden="true">
@@ -432,6 +482,7 @@
         fetchPendingProduct();
         fetchApprovedOrder();
         fetchDeliveredOrder();
+        fetchBestSellingProduct()
         function fetchPendingProduct() {
         $.ajax({
         url: 'mysql/fetch_pending_order.php',
@@ -469,6 +520,74 @@
         $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
         });
         });
+
+        function fetchBestSellingProduct() {
+          $.ajax({
+            url: 'mysql/fetch_best_selling_product.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+              const tbody = $("#best-selling tbody");
+              tbody.empty();
+
+              if (data.length > 0) {
+                // console.log(data);
+                data.forEach(best_selling => {
+                  const orderDate = new Date(best_selling.order_date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit'
+                  });
+
+                  const fullName = `${best_selling.first_name} ${best_selling.middle_name} ${best_selling.last_name}`;
+
+                  const productCountText = `${best_selling.item_quantity} ${best_selling.item_quantity === 1 ? 'product' : 'products'}`;
+
+                  const totalAmount = best_selling.total_amount
+                    ? '₱' + parseFloat(best_selling.total_amount).toLocaleString('en-PH', { minimumFractionDigits: 2 })
+                    : 'N/A';
+
+                  const row = `
+                    <tr>
+                      <td>${best_selling.id}</td>
+                      <td>${best_selling.number_of_orders}  ${best_selling.number_of_orders === 1 ? 'product' : 'products'}</td>
+                      <td>
+                          <img
+                              src="mysql/${best_selling.image}"
+                              alt="${best_selling.image}"
+                              style="width: 30px; height: auto; cursor: pointer;"
+                              onclick="viewImage('${best_selling.image}', '${best_selling.image}')"
+                          >
+                      </td>
+                      <td>${best_selling.owner}</td>
+                      <td>${best_selling.price}</td>
+                    </tr>
+                  `;
+                  tbody.append(row);
+                });
+              } else {
+                tbody.append('<tr><td colspan="7" class="text-center">No programs found.</td></tr>');
+              }
+            },
+            error: function(xhr, status, error) {
+              console.error('Error fetching approved orders:', error);
+            }
+          });
+        }
+
+        function viewImage(imagePath, productName) {
+            // Get references to the modal elements
+            const modalImage = document.getElementById('modalImage');
+
+            // Set the modal image source and title
+            modalImage.src = `mysql/${imagePath}`;
+            modalImage.alt = productName;
+
+            // Show the modal
+            const viewImageModal = new bootstrap.Modal(document.getElementById('viewImageModal'));
+            viewImageModal.show();
+        }
+
         function fetchApprovedOrder() {
         $.ajax({
         url: 'mysql/fetch_approved_order.php',
